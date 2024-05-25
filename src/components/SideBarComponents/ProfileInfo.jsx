@@ -4,8 +4,11 @@ const ProfileInfo = () => {
   const { currentEmployee } = useAuth();
 
   return (
-    <div>
-      <h1>{currentEmployee.name}</h1>
+    <div className="text-center text-white p-4">
+      <div className="bg-sky-800 p-4 rounded-lg">
+        <h1>{currentEmployee.name}</h1>
+        <p>{currentEmployee.email}</p>
+      </div>
     </div>
   );
 };
