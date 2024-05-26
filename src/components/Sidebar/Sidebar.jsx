@@ -9,13 +9,15 @@ import { useAuth } from "../../context/AuthContext";
 import ProfileInfo from "../SideBarComponents/ProfileInfo";
 // CSS
 import "./Sidebar.css";
+import { useUIModal } from "../../context/UIModalContext";
 
-const Sidebar = () => {
+const Sidebar = ({ isSideBarOpen }) => {
   // Navigation
   const navigate = useNavigate();
 
   // Context
   const { currentEmployee, logout } = useAuth();
+  const { showToast } = useUIModal();
 
   // States
   const [selectedPage, setSelectedPage] = useState("");
@@ -31,6 +33,7 @@ const Sidebar = () => {
   const handleLogout = () => {
     logout();
     navigate("/");
+    showToast("info", "Logged out!");
   };
 
   // Test
@@ -38,28 +41,31 @@ const Sidebar = () => {
   // console.log(API_URL);
 
   return (
-    <div className="w-1/5 shadow-md bg-sky-300 flex flex-col justify-between h-screen-nav">
+    <div className="shadow-md bg-gray-800 flex flex-col h-full justify-between text-white">
       <div>
         {/* User profile */}
         <ProfileInfo />
 
         {/* List of buttons */}
-        {buttons.map(
-          (button, index) =>
-            button.roles.includes(currentEmployee.role) && (
-              <button
-                key={index}
-                className={`block w-full p-4 hover:bg-white hover:scale-105 hover:shadow-md transition ${
-                  selectedPage == button.type ? "bg-white" : ""
-                }`}
-                onClick={() => {
-                  handleClick(button.type);
-                }}
-              >
-                {button.label}
-              </button>
-            )
-        )}
+        <ul className="">
+          {buttons.map(
+            (button, index) =>
+              button.roles.includes(currentEmployee.role) && (
+                <li key={index}>
+                  <button
+                    className={`block w-full p-4 hover:bg-sky-600 hover:scale-110 hover:shadow-md transition ${
+                      selectedPage == button.type ? "bg-sky-700" : ""
+                    }`}
+                    onClick={() => {
+                      handleClick(button.type);
+                    }}
+                  >
+                    <label className="cursor-pointer">{button.label}</label>
+                  </button>
+                </li>
+              )
+          )}
+        </ul>
       </div>
 
       {/* Logout */}
@@ -68,7 +74,7 @@ const Sidebar = () => {
           onClick={() => {
             handleLogout();
           }}
-          className="outline py-2 px-1 w-full text-white rounded-md hover:outline-white hover:bg-white hover:text-gray-800 transition-all"
+          className="outline py-2 px-1 w-full rounded-md hover:outline-sky-500 hover:bg-sky-500 hover:text-gray-900 transition-all"
         >
           Logout
         </button>

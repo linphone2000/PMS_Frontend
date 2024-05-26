@@ -47,13 +47,20 @@ const LoginForm = ({ mode, setMode }) => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -100 }}
       transition={{ duration: 0.3 }}
-      className="p-10 shadow-md rounded-lg border w-1/2 text-sky-700 text-center max-w-sm mx-auto"
+      className="shadow-lg flex justify-between w-7/12 rounded-lg border text-sky-700 text-center mx-auto"
     >
-      {/* Heading */}
-      <h1 className="text-3xl font-bold mb-6">Login</h1>
+      {/* Image */}
+      <div className="w-3/5">
+        <img className="rounded-s-lg" src="pms_login.webp"></img>
+      </div>
 
-      {/* Body */}
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+      {/* Form */}
+      <form
+        onSubmit={handleSubmit}
+        className="flex p-10 w-2/5 justify-center flex-col space-y-4"
+      >
+        {/* Heading */}
+        <h1 className="text-3xl font-bold mb-3">Login</h1>
         <input
           ref={emailRef}
           type="email"
@@ -78,13 +85,13 @@ const LoginForm = ({ mode, setMode }) => {
           {mode === "login"
             ? "Don't have an account? "
             : "Already have an account? "}
-          <span
-            onClick={handleModeChange}
-            className="cursor-pointer font-semibold hover:underline"
-          >
-            {mode === "login" ? "Register here" : "Login here"}
-          </span>
         </p>
+        <span
+          onClick={handleModeChange}
+          className="cursor-pointer text-sky-600 !mt-0 text-xs font-semibold hover:underline"
+        >
+          {mode === "login" ? "Register here" : "Login here"}
+        </span>
       </form>
     </motion.div>
   );

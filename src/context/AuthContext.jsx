@@ -9,6 +9,8 @@ export const AuthProvider = ({ children }) => {
 
   // States
   const [currentEmployee, setCurrentEmployee] = useState();
+  const [allEmployees, setAllEmployees] = useState([]);
+  const [employeesLoading, setEmployeesLoading] = useState(true);
 
   // Fetch logged in user
   useEffect(() => {
@@ -18,21 +20,39 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  // Fetch all users
+  useEffect(() => {
+    const getAllUsers = async () => {
+      const response = await axios.get(API_URL + "/users/");
+      if (response.status == 200) {
+        setAllEmployees(response.data.users);
+        setEmployeesLoading(false);
+      } else {
+        setAllEmployees([]);
+        setEmployeesLoading(false);
+      }
+    };
+    getAllUsers();
+  }, [currentEmployee]);
+
   // Handlers
   // Register
   const register = async (userData) => {
     try {
-      const { email, password, name, role } = userData;
+      const { email, password, name, employeeID } = userData;
       const response = await axios.post(API_URL + "/users/register", {
         email,
         password,
         name,
-        role,
+        employeeID,
       });
       return response;
     } catch (error) {
-      console.error("Error registering user:", error);
-      throw error;
+      if (error.response.data.message) {
+        throw new Error(error.response.data.message);
+      } else {
+        throw new Error("Error registering user");
+      }
     }
   };
 
@@ -58,10 +78,53 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Update
+  const updateEmployee = async (userData) => {
+    const formData = new FormData();
+    for (const key in userData) {
+      formData.append(key, userData[key]);
+    }
+    try {
+      const response = await axios.put(
+        API_URL + "/users/" + userData.id,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status == 200) {
+        fetchUserById(userData.id);
+      }
+    } catch (error) {
+      console.error("Error logging in user:", error);
+      throw error;
+    }
+  };
+
   // Logout
   const logout = () => {
     setCurrentEmployee(null);
     localStorage.removeItem("currentEmployee");
+  };
+
+  // Re-Fetch user after updating
+  const fetchUserById = async (id) => {
+    try {
+      const response = await axios.get(API_URL + "/users/" + id);
+      if (response.status == 200) {
+        const user = response.data.user;
+        setCurrentEmployee(user);
+        localStorage.setItem("currentEmployee", JSON.stringify(user));
+        return response;
+      } else {
+        return response;
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      throw error;
+    }
   };
 
   // Memo
@@ -70,9 +133,12 @@ export const AuthProvider = ({ children }) => {
       currentEmployee,
       register,
       login,
+      updateEmployee,
+      allEmployees,
+      employeesLoading,
       logout,
     }),
-    [currentEmployee]
+    [currentEmployee, employeesLoading]
   );
 
   return (

@@ -8,6 +8,8 @@
 @tailwind utilities;
 
 #root {
-    font-family: "Roboto Mono", monospace;
-    /* font-family: "Inter", sans-serif; */
+    /* font-family: "Roboto Mono", monospace; */
+    font-family: "Inter", sans-serif;
+    --tw-bg-opacity: 1;
+    background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
