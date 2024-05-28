@@ -17,10 +17,7 @@ const Sidebar = ({ isSideBarOpen }) => {
 
   // Context
   const { currentEmployee, logout } = useAuth();
-  const { showToast } = useUIModal();
-
-  // States
-  const [selectedPage, setSelectedPage] = useState("");
+  const { showToast, selectedPage, setSelectedPage } = useUIModal();
 
   // Handler
   // Handle Sidebar click
@@ -42,7 +39,7 @@ const Sidebar = ({ isSideBarOpen }) => {
 
   return (
     <div className="shadow-md bg-gray-800 flex flex-col h-full justify-between text-white">
-      <div>
+      <div className="relative">
         {/* User profile */}
         <ProfileInfo />
 
@@ -51,16 +48,21 @@ const Sidebar = ({ isSideBarOpen }) => {
           {buttons.map(
             (button, index) =>
               button.roles.includes(currentEmployee.role) && (
-                <li key={index}>
+                <li className="" key={index}>
                   <button
-                    className={`block w-full p-4 hover:bg-sky-600 hover:scale-110 hover:shadow-md transition ${
+                    className={`w-full p-4 hover:bg-sky-600 hover:scale-110 hover:shadow-md transition ${
                       selectedPage == button.type ? "bg-sky-700" : ""
                     }`}
                     onClick={() => {
                       handleClick(button.type);
                     }}
                   >
-                    <label className="cursor-pointer">{button.label}</label>
+                    <div className="flex w-4/5 gap-4 mx-auto items-center justify-between">
+                      <i className={`${button.icon} w-1/4`}></i>
+                      <div className="flex justify-start w-3/4">
+                        <p className="cursor-pointer">{button.label}</p>
+                      </div>
+                    </div>
                   </button>
                 </li>
               )

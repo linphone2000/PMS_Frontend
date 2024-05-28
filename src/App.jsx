@@ -6,14 +6,20 @@ import { AuthProvider } from "./context/AuthContext";
 // Component
 import Home from "./pages/Home/Home";
 import { UIModalProvider } from "./context/UIModalContext";
+import { SupplierProvider } from "./context/SupplierContext";
+import { InventoryProvider } from "./context/InventoryContext";
 
 function App() {
   return (
     <AuthProvider>
-      <UIModalProvider>
-        <ToastContainer />
-        <Home />
-      </UIModalProvider>
+      <SupplierProvider>
+        <InventoryProvider>
+          <UIModalProvider>
+            <ToastContainer />
+            <Home />
+          </UIModalProvider>
+        </InventoryProvider>
+      </SupplierProvider>
     </AuthProvider>
   );
 }

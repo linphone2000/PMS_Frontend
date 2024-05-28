@@ -14,6 +14,7 @@ export const UIModalProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
   const [modalForm, setModalForm] = useState();
+  const [selectedPage, setSelectedPage] = useState("");
 
   // Handlers
   const handleOpenModal = () => {
@@ -45,13 +46,15 @@ export const UIModalProvider = ({ children }) => {
       isSideBarOpen,
       setIsSideBarOpen,
       handleOpenModal,
+      selectedPage,
+      setSelectedPage,
       handleCloseModal,
       modalForm,
       setModalForm,
       handleSetModalForm,
       showToast,
     }),
-    [isModalOpen, isSideBarOpen]
+    [isModalOpen, isSideBarOpen, modalForm, selectedPage]
   );
 
   return (

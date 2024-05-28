@@ -96,6 +96,7 @@ export const AuthProvider = ({ children }) => {
       );
       if (response.status == 200) {
         fetchUserById(userData.id);
+        return response;
       }
     } catch (error) {
       console.error("Error logging in user:", error);

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
 // Utils
 import { formatRoleName } from "../../utils/formatter";
+import { useUIModal } from "../../context/UIModalContext";
 
 const Profile = () => {
   // API URL
@@ -13,6 +14,7 @@ const Profile = () => {
 
   // Context
   const { currentEmployee, updateEmployee } = useAuth();
+  const { showToast } = useUIModal();
 
   // States
   const [isHovered, setIsHovered] = useState(false);
@@ -30,9 +32,13 @@ const Profile = () => {
     setIsHovered(false);
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     setImage(event.target.files[0]);
-    updateEmployee({ image: event.target.files[0], id: currentEmployee._id });
+    const response = await updateEmployee({
+      image: event.target.files[0],
+      id: currentEmployee._id,
+    });
+    showToast("success", response.data.message);
   };
 
   const handleNameChange = (event) => {
@@ -43,13 +49,22 @@ const Profile = () => {
     setEmail(event.target.value);
   };
 
-  const handleUpdate = () => {
-    updateEmployee({ name: name, email: email, id: currentEmployee._id });
+  const handleUpdate = async () => {
+    const response = await updateEmployee({
+      name: name,
+      email: email,
+      id: currentEmployee._id,
+    });
+    showToast("success", response.data.message);
     setEditMode(false);
   };
 
   return (
-    <div className="flex justify-center items-center h-full bg-gray-900">
+    <motion.div
+      initial={{ opacity: 0, y: -100 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex justify-center items-center h-full bg-gray-900"
+    >
       <div className="bg-gray-800 text-gray-300 shadow-md rounded-lg p-6 w-full max-w-md">
         {/* Image */}
         <div className="relative flex justify-center mb-6">
@@ -105,7 +120,7 @@ const Profile = () => {
               type="text"
               value={name}
               onChange={handleNameChange}
-              className="text-3xl font-semibold text-center mb-4 w-full outline-none rounded-md bg-gray-700 text-white"
+              className="text-3xl font-semibold text-center mb-4 w-full outline-none rounded-md bg-gray-700 text-white ps-2"
             />
             <div className="flex items-center space-x-2 mb-2">
               <FaEnvelope className="text-sky-500" />
@@ -113,16 +128,18 @@ const Profile = () => {
                 type="email"
                 value={email}
                 onChange={handleEmailChange}
-                className="text-white w-full rounded-md bg-gray-700 outline-none"
+                className="text-white w-full rounded-md bg-gray-700 outline-none ps-2"
               />
             </div>
           </>
         ) : (
           <>
-            <h1 className="text-3xl font-semibold text-center mb-4">{name}</h1>
+            <h1 className="text-3xl font-semibold text-center mb-4 ps-2">
+              {name}
+            </h1>
             <div className="flex items-center space-x-2 mb-2">
               <FaEnvelope className="text-sky-500" />
-              <p className="text-white">{email}</p>
+              <p className="text-white ps-2">{email}</p>
             </div>
           </>
         )}
@@ -130,11 +147,13 @@ const Profile = () => {
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
             <FaUserTag className="text-sky-500" />
-            <p className="text-white">{formatRoleName(currentEmployee.role)}</p>
+            <p className="text-white ps-2">
+              {formatRoleName(currentEmployee.role)}
+            </p>
           </div>
           <div className="flex items-center space-x-2">
             <FaIdBadge className="text-sky-500" />
-            <p className="text-white">{currentEmployee.employeeID}</p>
+            <p className="text-white ps-2">{currentEmployee.employeeID}</p>
           </div>
         </div>
 
@@ -143,13 +162,13 @@ const Profile = () => {
             <div className="flex gap-2 justify-center">
               <button
                 onClick={handleUpdate}
-                className="bg-sky-500 text-white p-2 rounded hover:bg-sky-600"
+                className="bg-sky-500 text-white p-2 rounded-lg min-w-20 text-sm hover:bg-sky-600 hover:scale-95 transition"
               >
                 Update
               </button>
               <button
                 onClick={() => setEditMode(false)}
-                className="bg-sky-500 text-white p-2 rounded hover:bg-sky-600"
+                className="bg-sky-500 text-white p-2 rounded-lg min-w-20 text-sm hover:bg-sky-600 hover:scale-95 transition"
               >
                 Cancel
               </button>
@@ -157,14 +176,14 @@ const Profile = () => {
           ) : (
             <button
               onClick={() => setEditMode(true)}
-              className="bg-sky-500 text-white p-2 rounded hover:bg-sky-600"
+              className="bg-sky-500 text-white p-2 rounded-lg min-w-20 text-sm hover:bg-sky-600 hover:scale-95 transition"
             >
               Edit
             </button>
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
