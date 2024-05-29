@@ -34,10 +34,10 @@ const Profile = () => {
 
   const handleFileChange = async (event) => {
     setImage(event.target.files[0]);
-    const response = await updateEmployee({
-      image: event.target.files[0],
-      id: currentEmployee._id,
-    });
+    const userData = new FormData();
+    userData.append("image", event.target.files[0]);
+    userData.append("_id", currentEmployee._id);
+    const response = await updateEmployee(userData);
     showToast("success", response.data.message);
   };
 
@@ -50,11 +50,11 @@ const Profile = () => {
   };
 
   const handleUpdate = async () => {
-    const response = await updateEmployee({
-      name: name,
-      email: email,
-      id: currentEmployee._id,
-    });
+    const userData = new FormData();
+    userData.append("name", name);
+    userData.append("email", email);
+    userData.append("_id", currentEmployee._id);
+    const response = await updateEmployee(userData);
     showToast("success", response.data.message);
     setEditMode(false);
   };

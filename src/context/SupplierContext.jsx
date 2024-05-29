@@ -100,10 +100,11 @@ export const SupplierProvider = ({ children }) => {
       suppliersLoading,
       registerSupplier,
       updateSupplier,
+      supplierTableChanged,
       deleteSupplier,
       fetchSupplierById,
     }),
-    [allSuppliers, suppliersLoading]
+    [allSuppliers, suppliersLoading, supplierTableChanged]
   );
 
   return (

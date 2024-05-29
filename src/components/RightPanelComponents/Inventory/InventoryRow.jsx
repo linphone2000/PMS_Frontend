@@ -190,7 +190,7 @@ const InventoryRow = ({ item, isEditable, onEdit, onCancelEdit }) => {
           </select>
         ) : (
           <p className="border border-transparent bg-transparent px-2 py-1 rounded-md w-full text-white">
-            {item.supplier ? item.supplier.supplierName : "Supplier Deleted"}
+            {item.supplier ? item.supplier.supplierName : <span className="text-rose-500">Supplier Deleted</span>}
           </p>
         )}
       </td>

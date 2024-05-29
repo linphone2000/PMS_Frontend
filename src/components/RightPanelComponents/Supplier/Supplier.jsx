@@ -14,6 +14,7 @@ const Supplier = () => {
 
   // States
   const [searchTerm, setSearchTerm] = useState("");
+  const [editableRow, setEditableRow] = useState(null);
 
   // Search
   const filteredSuppliers = allSuppliers.filter((supplier) =>
@@ -24,6 +25,14 @@ const Supplier = () => {
   const handleSupplierAdd = () => {
     handleSetModalForm("supplieradd");
     handleOpenModal();
+  };
+
+  const handleEdit = (supplierId) => {
+    setEditableRow(supplierId);
+  };
+
+  const handleCancelEdit = () => {
+    setEditableRow(null);
   };
 
   return (
@@ -76,7 +85,13 @@ const Supplier = () => {
             </tr>
           ) : (
             filteredSuppliers.map((supplier) => (
-              <SupplierRow key={supplier._id} supplier={supplier} />
+              <SupplierRow
+                key={supplier._id}
+                supplier={supplier}
+                isEditable={editableRow === supplier._id}
+                onEdit={() => handleEdit(supplier._id)}
+                onCancelEdit={handleCancelEdit}
+              />
             ))
           )}
         </tbody>

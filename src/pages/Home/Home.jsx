@@ -69,15 +69,15 @@ const Home = () => {
                 {/* Collaspe button */}
                 <div className="absolute left-0">
                   <button
-                    className="p-0.5 bg-gray-800 rounded-r-md border border-s-0 border-t-0 border-gray-800 hover:border-gray-500 hover:cursor-pointer transition"
+                    className="p-1 bg-gray-800 rounded-r-md border border-s-0 border-t-0 border-gray-800 hover:border-gray-500 hover:cursor-pointer transition"
                     onClick={() => {
                       setIsSideBarOpen((prev) => !prev);
                     }}
                   >
                     {isSideBarOpen ? (
-                      <i className="fa-solid fa-angle-left text-sm text-white"></i>
+                      <i className="fa-solid fa-chevron-left text-white"></i>
                     ) : (
-                      <i className="fa-solid fa-angle-right text-sm text-white"></i>
+                      <i className="fa-solid fa-chevron-right text-white"></i>
                     )}
                   </button>
                 </div>

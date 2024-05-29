@@ -7,13 +7,26 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 const Employee = () => {
-  const { allEmployees, employeesLoading } = useAuth();
+  // Context
+  const { allEmployees, employeesLoading, currentEmployee } = useAuth();
+
+  // States
   const [searchTerm, setSearchTerm] = useState("");
+  const [editableRow, setEditableRow] = useState(null);
 
   // Search
   const filteredEmployees = allEmployees.filter((employee) =>
     employee.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Handlers
+  const handleEdit = (employeeId) => {
+    setEditableRow(employeeId);
+  };
+
+  const handleCancelEdit = () => {
+    setEditableRow(null);
+  };
 
   return (
     <motion.div
@@ -57,9 +70,25 @@ const Employee = () => {
               </td>
             </tr>
           ) : (
-            filteredEmployees.map((employee) => (
-              <EmployeeRow key={employee.employeeID} employee={employee} />
-            ))
+            filteredEmployees.map((employee) => {
+              if (
+                currentEmployee._id !== employee._id &&
+                (employee.role !== "headAdmin" ||
+                  currentEmployee.role !== "managerAdmin")
+              ) {
+                return (
+                  <EmployeeRow
+                    key={employee._id}
+                    employee={employee}
+                    isEditable={editableRow === employee._id}
+                    onEdit={() => handleEdit(employee._id)}
+                    onCancelEdit={handleCancelEdit}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })
           )}
         </tbody>
       </table>

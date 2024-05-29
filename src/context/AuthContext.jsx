@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [currentEmployee, setCurrentEmployee] = useState();
   const [allEmployees, setAllEmployees] = useState([]);
   const [employeesLoading, setEmployeesLoading] = useState(true);
+  const [employeeTableChanged, setEmployeeTableChanged] = useState(false);
 
   // Fetch logged in user
   useEffect(() => {
@@ -22,18 +23,24 @@ export const AuthProvider = ({ children }) => {
 
   // Fetch all users
   useEffect(() => {
+    console.log("Fetched users");
     const getAllUsers = async () => {
-      const response = await axios.get(API_URL + "/users/");
-      if (response.status == 200) {
-        setAllEmployees(response.data.users);
-        setEmployeesLoading(false);
-      } else {
+      try {
+        const response = await axios.get(API_URL + "/users/");
+        if (response.status === 200) {
+          setAllEmployees(response.data.users);
+        } else {
+          setAllEmployees([]);
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
         setAllEmployees([]);
+      } finally {
         setEmployeesLoading(false);
       }
     };
     getAllUsers();
-  }, [currentEmployee]);
+  }, [employeeTableChanged]);
 
   // Handlers
   // Register
@@ -46,9 +53,10 @@ export const AuthProvider = ({ children }) => {
         name,
         employeeID,
       });
+      setEmployeeTableChanged((prev) => !prev);
       return response;
     } catch (error) {
-      if (error.response.data.message) {
+      if (error.response && error.response.data.message) {
         throw new Error(error.response.data.message);
       } else {
         throw new Error("Error registering user");
@@ -64,7 +72,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      if (response.status == 200) {
+      if (response.status === 200) {
         const user = response.data.user;
         setCurrentEmployee(user);
         localStorage.setItem("currentEmployee", JSON.stringify(user));
@@ -78,28 +86,60 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Update
+  // Update self
   const updateEmployee = async (userData) => {
-    const formData = new FormData();
-    for (const key in userData) {
-      formData.append(key, userData[key]);
-    }
     try {
       const response = await axios.put(
-        API_URL + "/users/" + userData.id,
-        formData,
+        API_URL + "/users/" + userData.get("_id"),
+        userData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
-      if (response.status == 200) {
-        fetchUserById(userData.id);
+      if (response.status === 200) {
+        fetchUserById(userData.get("_id"));
         return response;
       }
     } catch (error) {
-      console.error("Error logging in user:", error);
+      console.error("Error updating user:", error);
+      throw error;
+    }
+  };
+
+  // Update others
+  const updateEmployees = async (userData) => {
+    try {
+      const response = await axios.put(
+        API_URL + "/users/" + userData.get("_id"),
+        userData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status === 200) {
+        setEmployeeTableChanged((prev) => !prev);
+        return response;
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+      throw error;
+    }
+  };
+
+  // Delete Employee
+  const deleteEmployee = async (id) => {
+    try {
+      const response = await axios.delete(API_URL + "/users/" + id);
+      if (response.status === 200) {
+        setEmployeeTableChanged((prev) => !prev);
+        return response;
+      }
+    } catch (error) {
+      console.error("Error deleting employee:", error);
       throw error;
     }
   };
@@ -108,13 +148,14 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setCurrentEmployee(null);
     localStorage.removeItem("currentEmployee");
+    setEmployeeTableChanged((prev) => !prev);
   };
 
   // Re-Fetch user after updating
   const fetchUserById = async (id) => {
     try {
       const response = await axios.get(API_URL + "/users/" + id);
-      if (response.status == 200) {
+      if (response.status === 200) {
         const user = response.data.user;
         setCurrentEmployee(user);
         localStorage.setItem("currentEmployee", JSON.stringify(user));
@@ -135,11 +176,14 @@ export const AuthProvider = ({ children }) => {
       register,
       login,
       updateEmployee,
+      updateEmployees,
+      deleteEmployee,
       allEmployees,
+      employeeTableChanged,
       employeesLoading,
       logout,
     }),
-    [currentEmployee, employeesLoading]
+    [currentEmployee, employeesLoading, allEmployees, employeeTableChanged]
   );
 
   return (

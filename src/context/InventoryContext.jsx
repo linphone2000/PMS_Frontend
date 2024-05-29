@@ -1,9 +1,13 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useSupplier } from "./SupplierContext";
 
 const InventoryContext = createContext();
 
 export const InventoryProvider = ({ children }) => {
+  // Context
+  const { supplierTableChanged } = useSupplier();
+
   // API URL
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -30,7 +34,7 @@ export const InventoryProvider = ({ children }) => {
       }
     };
     getAllItems();
-  }, [itemTableChanged]);
+  }, [itemTableChanged, supplierTableChanged]);
 
   // Handlers
   // Add Item
