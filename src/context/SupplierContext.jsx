@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { all } from "axios";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const SupplierContext = createContext();
@@ -15,6 +15,7 @@ export const SupplierProvider = ({ children }) => {
   // Fetch all suppliers
   useEffect(() => {
     const getAllSuppliers = async () => {
+      setAllSuppliers([]);
       try {
         const response = await axios.get(API_URL + "/suppliers/");
         if (response.status === 200) {
@@ -59,7 +60,7 @@ export const SupplierProvider = ({ children }) => {
         supplierData
       );
       if (response.status === 200) {
-        fetchSupplierById(supplierData._id); // Re-fetch the supplier after updating
+        setSupplierTableChanged((prev) => !prev);
         return response;
       }
     } catch (error) {

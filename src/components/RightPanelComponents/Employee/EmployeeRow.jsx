@@ -49,7 +49,7 @@ const EmployeeRow = ({ employee, isEditable, onEdit, onCancelEdit }) => {
       onCancelEdit();
     } catch (error) {
       console.error("Error updating employee:", error);
-      showToast("error", "Email or Employee can't be duplicated.");
+      showToast("error", error.message);
     }
   };
 

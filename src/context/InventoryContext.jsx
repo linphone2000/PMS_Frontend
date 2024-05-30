@@ -1,12 +1,14 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useSupplier } from "./SupplierContext";
+import { useMaster } from "./MasterContext";
 
 const InventoryContext = createContext();
 
 export const InventoryProvider = ({ children }) => {
   // Context
   const { supplierTableChanged } = useSupplier();
+  const { tableChanged } = useMaster();
 
   // API URL
   const API_URL = import.meta.env.VITE_API_URL;
@@ -19,6 +21,7 @@ export const InventoryProvider = ({ children }) => {
   // Fetch all items
   useEffect(() => {
     const getAllItems = async () => {
+      setAllItems([]);
       try {
         const response = await axios.get(API_URL + "/inventory/");
         if (response.status === 200) {
@@ -34,7 +37,7 @@ export const InventoryProvider = ({ children }) => {
       }
     };
     getAllItems();
-  }, [itemTableChanged, supplierTableChanged]);
+  }, [itemTableChanged, supplierTableChanged, tableChanged]);
 
   // Handlers
   // Add Item
@@ -137,7 +140,7 @@ export const InventoryProvider = ({ children }) => {
       deleteItem,
       fetchItemById,
     }),
-    [allItems, itemsLoading]
+    [allItems, itemsLoading, itemTableChanged]
   );
 
   return (

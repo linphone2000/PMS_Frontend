@@ -8,19 +8,28 @@ import Home from "./pages/Home/Home";
 import { UIModalProvider } from "./context/UIModalContext";
 import { SupplierProvider } from "./context/SupplierContext";
 import { InventoryProvider } from "./context/InventoryContext";
+import { CustomerProvider } from "./context/CustomerContext";
+import { OrderProvider } from "./context/OrderContext";
+import { MasterProvider } from "./context/MasterContext";
 
 function App() {
   return (
-    <AuthProvider>
-      <SupplierProvider>
-        <InventoryProvider>
-          <UIModalProvider>
-            <ToastContainer />
-            <Home />
-          </UIModalProvider>
-        </InventoryProvider>
-      </SupplierProvider>
-    </AuthProvider>
+    <MasterProvider>
+      <AuthProvider>
+        <SupplierProvider>
+          <InventoryProvider>
+            <CustomerProvider>
+              <OrderProvider>
+                <UIModalProvider>
+                  <ToastContainer />
+                  <Home />
+                </UIModalProvider>
+              </OrderProvider>
+            </CustomerProvider>
+          </InventoryProvider>
+        </SupplierProvider>
+      </AuthProvider>
+    </MasterProvider>
   );
 }
 

@@ -23,8 +23,8 @@ export const AuthProvider = ({ children }) => {
 
   // Fetch all users
   useEffect(() => {
-    console.log("Fetched users");
     const getAllUsers = async () => {
+      setAllEmployees([]);
       try {
         const response = await axios.get(API_URL + "/users/");
         if (response.status === 200) {
@@ -46,13 +46,7 @@ export const AuthProvider = ({ children }) => {
   // Register
   const register = async (userData) => {
     try {
-      const { email, password, name, employeeID } = userData;
-      const response = await axios.post(API_URL + "/users/register", {
-        email,
-        password,
-        name,
-        employeeID,
-      });
+      const response = await axios.post(API_URL + "/users/register", userData);
       setEmployeeTableChanged((prev) => !prev);
       return response;
     } catch (error) {
@@ -120,13 +114,17 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
+      setEmployeeTableChanged((prev) => !prev);
       if (response.status === 200) {
-        setEmployeeTableChanged((prev) => !prev);
         return response;
       }
     } catch (error) {
-      console.error("Error updating user:", error);
-      throw error;
+      setEmployeeTableChanged((prev) => !prev);
+      if (error.response && error.response.data.message) {
+        throw new Error(error.response.data.message);
+      } else {
+        throw new Error("Error updating user");
+      }
     }
   };
 

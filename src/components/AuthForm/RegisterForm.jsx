@@ -25,14 +25,15 @@ const RegisterForm = ({ mode, setMode }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData = {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-      name: nameRef.current.value,
-      employeeID: employeeIDRef.current.value,
-    };
+
     try {
-      const response = await register(userData);
+      const employeeData = new FormData();
+      employeeData.append("name", nameRef.current.value);
+      employeeData.append("email", emailRef.current.value);
+      employeeData.append("password", passwordRef.current.value);
+      employeeData.append("employeeID", employeeIDRef.current.value);
+
+      const response = await register(employeeData);
       if (response.status == 200) {
         showToast("success", response.data.message);
         setMode("login");

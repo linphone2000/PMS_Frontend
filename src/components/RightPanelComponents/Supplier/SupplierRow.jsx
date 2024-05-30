@@ -70,10 +70,10 @@ const SupplierRow = ({ supplier, isEditable, onEdit, onCancelEdit }) => {
             type="text"
             value={supplierName}
             onChange={(e) => setSupplierName(e.target.value)}
-            className="border border-gray-300 px-2 py-1 rounded-md w-full bg-gray-700 text-white"
+            className="border border-gray-300 py-1 rounded-md w-full bg-gray-700 text-white"
           />
         ) : (
-          <p className="border border-transparent bg-transparent px-2 py-1 rounded-md w-full text-white">
+          <p className="border border-transparent bg-transparent py-1 rounded-md w-full text-white">
             {supplierName}
           </p>
         )}

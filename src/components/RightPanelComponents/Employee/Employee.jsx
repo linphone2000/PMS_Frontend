@@ -1,14 +1,17 @@
 // Components
 import EmployeeRow from "./EmployeeRow.jsx";
+import EmployeeAddForm from "./EmployeeAddForm";
 // Context
 import { useAuth } from "../../../context/AuthContext";
 // React
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useUIModal } from "../../../context/UIModalContext.jsx";
 
 const Employee = () => {
   // Context
   const { allEmployees, employeesLoading, currentEmployee } = useAuth();
+  const { handleSetModalForm, handleOpenModal } = useUIModal();
 
   // States
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,6 +23,11 @@ const Employee = () => {
   );
 
   // Handlers
+  const handleEmployeeAdd = () => {
+    handleSetModalForm("employeeadd");
+    handleOpenModal();
+  };
+
   const handleEdit = (employeeId) => {
     setEditableRow(employeeId);
   };
@@ -42,6 +50,12 @@ const Employee = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <button
+          className="p-2 bg-sky-700 text-white rounded-lg hover:bg-sky-800 transition"
+          onClick={() => handleEmployeeAdd()}
+        >
+          Add Employee
+        </button>
       </div>
       <table className="w-full text-left border-collapse rounded-lg overflow-hidden">
         <thead className="bg-sky-700 text-gray-200">

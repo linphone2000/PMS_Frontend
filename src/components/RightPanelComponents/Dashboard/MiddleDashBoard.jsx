@@ -1,10 +1,23 @@
+// React
 import { useNavigate } from "react-router-dom";
+// Components
 import InfoBox from "./InfoBox";
+// Context
 import { useUIModal } from "../../../context/UIModalContext";
+import { useAuth } from "../../../context/AuthContext";
+import { useInventory } from "../../../context/InventoryContext";
+import { useSupplier } from "../../../context/SupplierContext";
+import { useOrder } from "../../../context/OrderContext";
+import { useCustomer } from "../../../context/CustomerContext";
 
 const MiddleDashBoard = () => {
   // Context
   const { setSelectedPage } = useUIModal();
+  const { allEmployees } = useAuth();
+  const { allItems } = useInventory();
+  const { allSuppliers } = useSupplier();
+  const { allOrders } = useOrder();
+  const { allCustomers } = useCustomer();
 
   // Navigation
   const navigate = useNavigate();
@@ -32,7 +45,7 @@ const MiddleDashBoard = () => {
           title="Medicines"
           page="inventory"
           color="emerald"
-          buttonText="View details"
+          buttonText={`Total Items: ${allItems.length}`}
           onButtonClick={handleClick}
         />
         <InfoBox
@@ -40,7 +53,7 @@ const MiddleDashBoard = () => {
           title="Employees"
           page="employee"
           color="yellow"
-          buttonText="View details"
+          buttonText={`Total Employees: ${allEmployees.length}`}
           onButtonClick={handleClick}
         />
         <InfoBox
@@ -48,7 +61,7 @@ const MiddleDashBoard = () => {
           title="Orders"
           page="order"
           color="sky"
-          buttonText="View details"
+          buttonText={`Total Orders: ${allOrders.length}`}
           onButtonClick={handleClick}
         />
         <InfoBox
@@ -56,7 +69,15 @@ const MiddleDashBoard = () => {
           title="Suppliers"
           page="supplier"
           color="rose"
-          buttonText="View details"
+          buttonText={`Total Suppliers: ${allSuppliers.length}`}
+          onButtonClick={handleClick}
+        />
+        <InfoBox
+          iconClass="fa-solid fa-user"
+          title="Customers"
+          page="customer"
+          color="lime"
+          buttonText={`Total Customers: ${allCustomers.length}`}
           onButtonClick={handleClick}
         />
       </div>

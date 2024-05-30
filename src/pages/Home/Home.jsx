@@ -5,11 +5,11 @@ import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Dashboard from "../../components/RightPanelComponents/Dashboard/Dashboard";
 import Employee from "../../components/RightPanelComponents/Employee/Employee";
-import Order from "../../components/RightPanelComponents/Order";
+import Order from "../../components/RightPanelComponents/Order/Order";
 import Supplier from "../../components/RightPanelComponents/Supplier/Supplier";
 import Profile from "../../components/RightPanelComponents/Profile";
 import Inventory from "../../components/RightPanelComponents/Inventory/Inventory";
-import Customer from "../../components/RightPanelComponents/Customer";
+import Customer from "../../components/RightPanelComponents/Customer/Customer";
 import AuthForm from "../../components/AuthForm/AuthForm";
 // Context
 import { useAuth } from "../../context/AuthContext";
@@ -19,6 +19,9 @@ import { useUIModal } from "../../context/UIModalContext";
 import Modal from "../../components/Modal/Modal";
 import SupplierAddForm from "../../components/RightPanelComponents/Supplier/SupplierAddForm";
 import InventoryAddForm from "../../components/RightPanelComponents/Inventory/InventoryAddForm";
+import EmployeeAddForm from "../../components/RightPanelComponents/Employee/EmployeeAddForm";
+import CustomerAddForm from "../../components/RightPanelComponents/Customer/CustomerAddForm";
+import OrderAddForm from "../../components/RightPanelComponents/Order/OrderAddForm";
 
 const Home = () => {
   // Context
@@ -38,6 +41,18 @@ const Home = () => {
             ) : modalForm === "inventoryadd" ? (
               <Modal>
                 <InventoryAddForm />
+              </Modal>
+            ) : modalForm === "employeeadd" ? (
+              <Modal>
+                <EmployeeAddForm />
+              </Modal>
+            ) : modalForm === "customeradd" ? (
+              <Modal>
+                <CustomerAddForm />
+              </Modal>
+            ) : modalForm === "orderadd" ? (
+              <Modal>
+                <OrderAddForm />
               </Modal>
             ) : null}
 
