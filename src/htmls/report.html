@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Management System</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for hidden class */
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-black">
+
+    <!-- Header -->
+    <header class="bg-blue-800 p-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Pharmacy Management System</h1>
+            <nav>
+                <a href="index.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                <a href="inventory.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Inventory</a>
+                <a href="sale.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Sales</a>
+                <a href="report.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Reports</a>
+                <a href="edit.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto mt-8">
+        <!-- Reports Section -->
+        <section id="reports" class="mb-8">
+            <h2 class="text-2xl font-semibold text-white mb-4">Reports</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div id="generate-report">
+                    <form id="report-form">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="report-type">Report Type</label>
+                            <select id="report-type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                <option value="sales">Sales Report</option>
+                                <option value="inventory">Inventory Report</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="start-date">Start Date</label>
+                            <input id="start-date" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="end-date">End Date</label>
+                            <input id="end-date" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button type="button" onclick="generateReport()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Generate Report</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="view-report" class="hidden mt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Report</h3>
+                    <div id="report-content" class="bg-gray-100 p-4 rounded-lg">
+                        <!-- Report content will be inserted here by JavaScript -->
+                    </div>
+                    <button type="button" onclick="toggleReportForm()" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded-md">Back</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript to handle report generation -->
+    <script>
+        function toggleReportForm() {
+            const generateReport = document.getElementById('generate-report');
+            const viewReport = document.getElementById('view-report');
+            generateReport.classList.toggle('hidden');
+            viewReport.classList.toggle('hidden');
+        }
+
+        function generateReport() {
+            const reportType = document.getElementById('report-type').value;
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+
+            // Simulate report generation
+            let reportContent = `<p><strong>Report Type:</strong> ${reportType.charAt(0).toUpperCase() + reportType.slice(1)} Report</p>`;
+            reportContent += `<p><strong>Period:</strong> ${startDate} to ${endDate}</p>`;
+            reportContent += `<p class="mt-4"><strong>Generated Data:</strong></p>`;
+            
+            // Example data for demonstration purposes
+            if (reportType === 'sales') {
+                reportContent += `
+                    <table class="min-w-full bg-white mt-4">
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Date</th>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Total Sales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="py-2 px-4 border-b border-gray-200">2024-05-20</td>
+                                <td class="py-2 px-4 border-b border-gray-200">$500</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b border-gray-200">2024-05-21</td>
+                                <td class="py-2 px-4 border-b border-gray-200">$750</td>
+                            </tr>
+                            <!-- More rows can be added as needed -->
+                        </tbody>
+                    </table>`;
+            } else if (reportType === 'inventory') {
+                reportContent += `
+                    <table class="min-w-full bg-white mt-4">
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Item</th>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Stock Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="py-2 px-4 border-b border-gray-200">Paracetamol</td>
+                                <td class="py-2 px-4 border-b border-gray-200">150</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b border-gray-200">Ibuprofen</td>
+                                <td class="py-2 px-4 border-b border-gray-200">200</td>
+                            </tr>
+                            <!-- More rows can be added as needed -->
+                        </tbody>
+                    </table>`;
+            }
+
+            document.getElementById('report-content').innerHTML = reportContent;
+            toggleReportForm();
+        }
+    </script>
+</body>
+</html>

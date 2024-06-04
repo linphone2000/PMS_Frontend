@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Management System</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-black">
+
+    <!-- Header -->
+    <header class="bg-blue-800 p-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Pharmacy Management System</h1>
+            <nav>
+                <a href="index.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                <a href="inventory.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Inventory</a>
+                <a href="sale.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Sales</a>
+                <a href="report.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Reports</a>
+                <a href="edit.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto mt-8">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="mb-8">
+            <h2 class="text-2xl font-semibold text-white mb-4">Dashboard</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-lg font-semibold text-gray-700">Total Sales</h3>
+                    <p class="text-3xl font-bold text-blue-600 mt-2">$5,000</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-lg font-semibold text-gray-700">Total Customers</h3>
+                    <p class="text-3xl font-bold text-blue-600 mt-2">1,200</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-lg font-semibold text-gray-700">Stock Alerts</h3>
+                    <p class="text-3xl font-bold text-red-600 mt-2">5 Items</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-lg font-semibold text-gray-700">Pending Orders</h3>
+                    <p class="text-3xl font-bold text-yellow-600 mt-2">10 Orders</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inventory Section -->
+        <section id="inventory" class="mb-8">
+            <h2 class="text-2xl font-semibold text-white mb-4">Inventory</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Item</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Quantity</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Expiry Date</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">Paracetamol</td>
+                            <td class="py-2 px-4 border-b border-gray-200">150</td>
+                            <td class="py-2 px-4 border-b border-gray-200">2024-12-01</td>
+                            <td class="py-2 px-4 border-b border-gray-200">
+                                <button class="bg-blue-500 text-white px-3 py-1 rounded-md">Update</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">Ibuprofen</td>
+                            <td class="py-2 px-4 border-b border-gray-200">200</td>
+                            <td class="py-2 px-4 border-b border-gray-200">2023-11-20</td>
+                            <td class="py-2 px-4 border-b border-gray-200">
+                                <button class="bg-blue-500 text-white px-3 py-1 rounded-md">Update</button>
+                            </td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sales Section -->
+        <section id="sales" class="mb-8">
+            <h2 class="text-2xl font-semibold text-white mb-4">Sales</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Date</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Customer</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Total</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Status</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">2024-05-20</td>
+                            <td class="py-2 px-4 border-b border-gray-200">John Doe</td>
+                            <td class="py-2 px-4 border-b border-gray-200">$50.00</td>
+                            <td class="py-2 px-4 border-b border-gray-200">Completed</td>
+                            <td class="py-2 px-4 border-b border-gray-200">
+                                <button class="bg-blue-500 text-white px-3 py-1 rounded-md">View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">2024-05-21</td>
+                            <td class="py-2 px-4 border-b border-gray-200">Jane Smith</td>
+                            <td class="py-2 px-4 border-b border-gray-200">$75.00</td>
+                            <td class="py-2 px-4 border-b border-gray-200">Pending</td>
+                            <td class="py-2 px-4 border-b border-gray-200">
+                                <button class="bg-blue-500 text-white px-3 py-1 rounded-md">View</button>
+                            </td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports" class="mb-8">
+            <h2 class="text-2xl font-semibold text-white mb-4">Reports</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="text-gray-700">Generate and view various reports like sales reports, inventory reports, and more.</p>
+                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md">Generate Report</button>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="mb-8">
+            <h2 class="text-2xl font-semibold text-white mb-4">Profile</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="text-gray-700">Manage your profile and settings.</p>
+                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md">Edit Profile</button>
+            </div>
+        </section

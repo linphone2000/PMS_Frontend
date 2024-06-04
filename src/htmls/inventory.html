@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Management System</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-black">
+
+    <!-- Header -->
+    <header class="bg-blue-800 p-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Pharmacy Management System</h1>
+            <nav>
+                <a href="index.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                <a href="inventory.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Inventory</a>
+                <a href="sale.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Sales</a>
+                <a href="report.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Reports</a>
+                <a href="edit.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto mt-8">
+        <!-- Inventory Section -->
+        <section id="inventory" class="mb-8">
+            <h2 class="text-2xl font-semibold text-white mb-4">Inventory</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Item</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Quantity</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Expiry Date</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">Paracetamol</td>
+                            <td class="py-2 px-4 border-b border-gray-200">150</td>
+                            <td class="py-2 px-4 border-b border-gray-200">2024-12-01</td>
+                            <td class="py-2 px-4 border-b border-gray-200">
+                                <button class="bg-blue-500 text-white px-3 py-1 rounded-md" onclick="editItem(this)">Update</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">Ibuprofen</td>
+                            <td class="py-2 px-4 border-b border-gray-200">200</td>
+                            <td class="py-2 px-4 border-b border-gray-200">2023-11-20</td>
+                            <td class="py-2 px-4 border-b border-gray-200">
+                                <button class="bg-blue-500 text-white px-3 py-1 rounded-md" onclick="editItem(this)">Update</button>
+                            </td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Update Item Modal -->
+        <div id="update-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                <h3 class="text-lg font-semibold text-gray-700 mb-4">Update Item</h3>
+                <form id="update-form">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="update-item">Item</label>
+                        <input id="update-item" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" disabled>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="update-quantity">Quantity</label>
+                        <input id="update-quantity" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="update-expiry">Expiry Date</label>
+                        <input id="update-expiry" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button type="button" onclick="saveUpdate()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Save</button>
+                        <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript to handle inventory update -->
+    <script>
+        function editItem(button) {
+            const row = button.closest('tr');
+            const item = row.children[0].innerText;
+            const quantity = row.children[1].innerText;
+            const expiry = row.children[2].innerText;
+
+            document.getElementById('update-item').value = item;
+            document.getElementById('update-quantity').value = quantity;
+            document.getElementById('update-expiry').value = expiry;
+
+            document.getElementById('update-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('update-modal').classList.add('hidden');
+        }
+
+        function saveUpdate() {
+            const item = document.getElementById('update-item').value;
+            const quantity = document.getElementById('update-quantity').value;
+            const expiry = document.getElementById('update-expiry').value;
+
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                if (row.children[0].innerText === item) {
+                    row.children[1].innerText = quantity;
+                    row.children[2].innerText = expiry;
+                }
+            });
+
+            closeModal();
+        }
+    </script>
+</body>
+</html>

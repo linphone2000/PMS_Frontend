@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Management System</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for hidden class */
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-black">
+
+    <!-- Header -->
+    <header class="bg-blue-800 p-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Pharmacy Management System</h1>
+            <nav>
+                <a href="index.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                <a href="inventory.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Inventory</a>
+                <a href="sale.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Sales</a>
+                <a href="report.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Reports</a>
+                <a href="edit.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto mt-8">
+        <!-- Profile Section -->
+        <section id="profile" class="mb-8">
+            <h2 class="text-2xl font-semibold text-white mb-4">Profile</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div id="view-profile">
+                    <p class="text-gray-700 mb-2"><strong>Name:</strong> John Doe</p>
+                    <p class="text-gray-700 mb-2"><strong>Email:</strong> john.doe@example.com</p>
+                    <p class="text-gray-700 mb-2"><strong>Phone:</strong> (123) 456-7890</p>
+                    <button onclick="toggleEditProfile()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md">Edit Profile</button>
+                </div>
+
+                <div id="edit-profile" class="hidden">
+                    <form id="profile-form">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
+                            <input id="name" type="text" value="John Doe" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+                            <input id="email" type="email" value="john.doe@example.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">Phone</label>
+                            <input id="phone" type="tel" value="(123) 456-7890" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button type="button" onclick="saveProfile()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Save</button>
+                            <button type="button" onclick="toggleEditProfile()" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript to handle profile edit toggle and save -->
+    <script>
+        function toggleEditProfile() {
+            const viewProfile = document.getElementById('view-profile');
+            const editProfile = document.getElementById('edit-profile');
+            viewProfile.classList.toggle('hidden');
+            editProfile.classList.toggle('hidden');
+        }
+
+        function saveProfile() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            document.querySelector('#view-profile p:nth-child(1)').innerHTML = `<strong>Name:</strong> ${name}`;
+            document.querySelector('#view-profile p:nth-child(2)').innerHTML = `<strong>Email:</strong> ${email}`;
+            document.querySelector('#view-profile p:nth-child(3)').innerHTML = `<strong>Phone:</strong> ${phone}`;
+
+            toggleEditProfile();
+        }
+    </script>
+</body>
+</html>
