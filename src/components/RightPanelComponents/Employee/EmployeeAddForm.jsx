@@ -33,11 +33,6 @@ const EmployeeAddForm = () => {
       employeeData.append("image", imageRef.current.files[0]);
     }
 
-    // Log FormData
-    for (let [key, value] of employeeData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-
     try {
       const response = await register(employeeData);
       handleCloseModal();
@@ -46,6 +41,11 @@ const EmployeeAddForm = () => {
       console.error("Error adding employee:", error);
       showToast("error", error.message);
     }
+  };
+
+  const handleFileUpload = (e) => {
+    e.preventDefault();
+    imageRef.current.click();
   };
 
   const handleFileChange = async (event) => {
@@ -109,22 +109,35 @@ const EmployeeAddForm = () => {
               />
             </div>
           </div>
+
+          {/* Image Upload Input */}
           <div className="mb-4 col-span-2">
             <label className="block mb-1 text-gray-200">Image:</label>
-            <input
-              type="file"
-              ref={imageRef}
-              onChange={handleFileChange}
-              className="border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-sky-500"
-            />
-            {image && (
-              <img
-                src={URL.createObjectURL(image)}
-                alt="Employee Preview"
-                className="mt-2 w-16 h-16 object-cover rounded-md"
+
+            {/* Image */}
+            <div className="flex gap-4 items-center">
+              <button
+                onClick={handleFileUpload}
+                className="bg-sky-500 hover:bg-sky-600 max-h-12 text-white font-bold py-2 px-4 rounded-md mr-2 focus:outline-none focus:bg-sky-600"
+              >
+                Choose File
+              </button>
+              {image && (
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="Employee Preview"
+                  className="mt-2 w-16 h-16 object-cover rounded-md"
+                />
+              )}
+              <input
+                type="file"
+                ref={imageRef}
+                onChange={handleFileChange}
+                className="opacity-0 w-0"
               />
-            )}
+            </div>
           </div>
+          
         </div>
         <div className="flex justify-end">
           <button

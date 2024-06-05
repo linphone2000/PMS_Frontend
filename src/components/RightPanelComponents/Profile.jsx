@@ -69,20 +69,20 @@ const Profile = () => {
         {/* Image */}
         <div className="relative flex justify-center mb-6">
           <div
-            className="relative w-32 h-32 rounded-full overflow-hidden shadow-lg bg-gray-700 flex items-center justify-center hover:cursor-pointer"
+            className="relative w-32 h-32 overflow-hidden shadow-lg flex items-center justify-center hover:cursor-pointer"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            {/* Display the existing image or a placeholder if no image is currently available */}
+            {/* Display the existing image or a placeholder*/}
             {currentEmployee.image && image == null ? (
               <img
                 src={`${IMG_URL}/${currentEmployee.image}`}
                 alt="Profile Picture"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-3xl border border-gray-400"
               />
             ) : image ? (
               <img
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-3xl border border-gray-400"
                 src={URL.createObjectURL(image)}
                 alt="New Profile"
               />
@@ -97,7 +97,7 @@ const Profile = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full"
+                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-3xl"
                 >
                   <p className="text-white">Upload</p>
                 </motion.div>

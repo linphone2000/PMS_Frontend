@@ -69,8 +69,8 @@ const BottomDashboard = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-900 min-h-screen">
-      <div className="flex justify-between items-center mb-4">
+    <div className="py-6 bg-gray-900 min-h-screen">
+      <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-semibold text-sky-100">System Overview</h1>
         <div>
           <button

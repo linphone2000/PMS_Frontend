@@ -44,20 +44,20 @@ const Sidebar = ({ isSideBarOpen }) => {
         <ProfileInfo />
 
         {/* List of buttons */}
-        <ul className="">
+        <ul className="items-center flex flex-col gap-2">
           {buttons.map(
             (button, index) =>
               button.roles.includes(currentEmployee.role) && (
-                <li className="" key={index}>
+                <li className="w-full text-center" key={index}>
                   <button
-                    className={`w-full p-4 hover:bg-sky-600 hover:scale-110 hover:shadow-md transition ${
+                    className={`w-5/6 px-4 py-3 rounded-full hover:bg-sky-600 hover:scale-110 hover:shadow-md transition ${
                       selectedPage == button.type ? "bg-sky-700" : ""
                     }`}
                     onClick={() => {
                       handleClick(button.type);
                     }}
                   >
-                    <div className="flex w-4/5 gap-4 mx-auto items-center justify-between">
+                    <div className="flex w-full gap-4 mx-auto items-center justify-between">
                       <i className={`${button.icon} w-1/4`}></i>
                       <div className="flex justify-start w-3/4">
                         <p className="cursor-pointer">{button.label}</p>
@@ -76,7 +76,7 @@ const Sidebar = ({ isSideBarOpen }) => {
           onClick={() => {
             handleLogout();
           }}
-          className="outline py-2 px-1 w-full rounded-md hover:outline-sky-500 hover:bg-sky-500 hover:text-gray-900 transition-all"
+          className="outline py-2 px-1 w-full rounded-full hover:outline-sky-500 hover:bg-sky-500 hover:text-gray-900 transition-all"
         >
           Logout
         </button>

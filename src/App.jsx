@@ -1,5 +1,6 @@
 // React
-import { ToastContainer } from "react-toastify";
+import { Bounce, Slide, Zoom, ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 // Context
 import { AuthProvider } from "./context/AuthContext";
@@ -21,7 +22,7 @@ function App() {
             <CustomerProvider>
               <OrderProvider>
                 <UIModalProvider>
-                  <ToastContainer />
+                  <ToastContainer position="top-center" transition={Zoom} />
                   <Home />
                 </UIModalProvider>
               </OrderProvider>

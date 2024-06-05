@@ -1,0 +1,6 @@
+.bg-con {
+    background-image: url('../../../public/pms_bg_4.webp');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}

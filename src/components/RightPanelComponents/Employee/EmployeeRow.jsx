@@ -71,7 +71,7 @@ const EmployeeRow = ({ employee, isEditable, onEdit, onCancelEdit }) => {
     <tr className="hover:bg-sky-800 transition-colors duration-300">
       <td className="flex p-4 relative">
         <div
-          className="relative w-16 h-16 rounded-md overflow-hidden shadow-lg bg-gray-700 flex items-center justify-center"
+          className="relative w-16 h-16 overflow-hidden shadow-lg bg-gray-700 flex items-center justify-center"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
@@ -79,11 +79,11 @@ const EmployeeRow = ({ employee, isEditable, onEdit, onCancelEdit }) => {
             <img
               src={`${IMG_URL}/${employee.image}`}
               alt="Profile Picture"
-              className="w-full h-full object-cover"
+              className="w-full h-full rounded-md object-cover border border-gray-400"
             />
           ) : image ? (
             <img
-              className="w-full h-full object-cover"
+              className="w-full h-full rounded-md object-cover border border-gray-400"
               src={URL.createObjectURL(image)}
               alt="New Profile Picture"
             />
@@ -142,18 +142,9 @@ const EmployeeRow = ({ employee, isEditable, onEdit, onCancelEdit }) => {
         )}
       </td>
       <td className="p-4">
-        {isEditable ? (
-          <input
-            type="text"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className="border border-gray-300 px-2 py-1 rounded-md w-full bg-gray-700 text-white"
-          />
-        ) : (
-          <p className="border border-transparent bg-transparent px-2 py-1 rounded-md w-full text-white">
-            {formatRoleName(role)}
-          </p>
-        )}
+        <p className="border border-transparent bg-transparent px-2 py-1 rounded-md w-full text-white">
+          {formatRoleName(role)}
+        </p>
       </td>
       <td className="p-4">
         {isEditable ? (

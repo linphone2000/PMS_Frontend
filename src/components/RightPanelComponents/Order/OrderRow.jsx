@@ -137,7 +137,8 @@ const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
             </div>
           ))}
         </td>
-        <td className="p-4">{totalPrice}</td>
+        <td className="p-4">{totalPrice.toFixed(2)}</td>
+
         <td className="p-4">
           {new Date(order.orderDate).toLocaleDateString()}
         </td>
@@ -189,7 +190,15 @@ const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
               <option value="Cancelled">Cancelled</option>
             </select>
           ) : (
-            status
+            <p
+              className={`px-2 py-1 rounded-lg text-center border ${
+                status === "Pending"
+                  ? "border-yellow-500 text-yellow-500 w-24"
+                  : "border-green-500 text-green-500 w-24"
+              }`}
+            >
+              {status}
+            </p>
           )}
         </td>
         <td className="p-4 text-center">

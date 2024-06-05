@@ -29,7 +29,7 @@ const MiddleDashBoard = () => {
   };
 
   return (
-    <div className="bg-sky-700 p-4 flex flex-col gap-4 text-sky-100 rounded-t-md">
+    <div className="bg-sky-700 p-6 flex flex-col gap-4 text-sky-100 rounded-md mb-6">
       {/* Headings */}
       <div className="">
         <h1 className="text-2xl font-semibold">Dashboard Overview</h1>

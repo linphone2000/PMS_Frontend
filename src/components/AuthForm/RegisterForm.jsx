@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useUIModal } from "../../context/UIModalContext";
 import Tooltip from "../Tooltip/Tooltip";
 
-const RegisterForm = ({ mode, setMode }) => {
+const RegisterForm = ({ setMode }) => {
   // Context
   const { register } = useAuth();
   const { showToast } = useUIModal();
@@ -19,10 +19,6 @@ const RegisterForm = ({ mode, setMode }) => {
   const employeeIDRef = useRef();
 
   // Handlers
-  const handleModeChange = () => {
-    setMode(mode === "register" ? "login" : "register");
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -34,7 +30,7 @@ const RegisterForm = ({ mode, setMode }) => {
       employeeData.append("employeeID", employeeIDRef.current.value);
 
       const response = await register(employeeData);
-      if (response.status == 200) {
+      if (response.status === 200) {
         showToast("success", response.data.message);
         setMode("login");
       }
@@ -50,40 +46,40 @@ const RegisterForm = ({ mode, setMode }) => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
       transition={{ duration: 0.3 }}
-      className="shadow-lg flex justify-between w-7/12 rounded-lg border text-sky-700 text-center mx-auto"
+      className="shadow-lg flex justify-between w-7/12 rounded-lg overflow-hidden border text-sky-700 text-center mx-auto"
     >
       {/* Image */}
       <div className="w-3/5">
-        <img className="rounded-s-lg" src="pms_login.webp"></img>
+        <img className="rounded-s-lg h-full" src="pms_login.webp" alt="Register" />
       </div>
 
       {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="flex p-10 w-2/5 flex-col space-y-4"
+        className="flex p-10 w-2/5 flex-col space-y-4 bg-sky-50"
       >
         {/* Heading */}
-        <h1 className="text-3xl font-bold mb-6">Register</h1>
+        <h1 className="text-3xl font-bold text-sky-400 mb-6">Register</h1>
         <input
           ref={emailRef}
           type="email"
           required
           placeholder="Email"
-          className="px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-sky-500 focus:border-sky-500"
+          className="px-4 py-2 border border-sky-300 rounded-full focus:outline-none focus:ring-sky-500 focus:border-sky-500"
         />
         <input
           ref={passwordRef}
           type="password"
           required
           placeholder="Password"
-          className="px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-sky-500 focus:border-sky-500"
+          className="px-4 py-2 border border-sky-300 rounded-full focus:outline-none focus:ring-sky-500 focus:border-sky-500"
         />
         <input
           ref={nameRef}
           type="text"
           required
           placeholder="Full Name"
-          className="px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-sky-500 focus:border-sky-500"
+          className="px-4 py-2 border border-sky-300 rounded-full focus:outline-none focus:ring-sky-500 focus:border-sky-500"
         />
         <div className="relative">
           <input
@@ -91,7 +87,7 @@ const RegisterForm = ({ mode, setMode }) => {
             type="text"
             required
             placeholder="Employee ID"
-            className="px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-sky-500 focus:border-sky-500 w-full"
+            className="px-4 py-2 border border-sky-300 rounded-full focus:outline-none focus:ring-sky-500 focus:border-sky-500 w-full"
             onFocus={() => setTooltipVisible(true)}
             onBlur={() => setTooltipVisible(false)}
             onMouseEnter={() => setTooltipVisible(true)}
@@ -104,20 +100,16 @@ const RegisterForm = ({ mode, setMode }) => {
         </div>
         <button
           type="submit"
-          className="px-4 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 focus:outline-none focus:bg-sky-600 transition duration-200 ease-in-out"
+          className="px-4 py-2 bg-sky-500 text-white rounded-full hover:bg-sky-600 hover:scale-105 focus:outline-none focus:bg-sky-600 transition duration-200 ease-in-out"
         >
           Register
         </button>
-        <p className="text-sm text-sky-500">
-          {mode === "login"
-            ? "Don't have an account? "
-            : "Already have an account? "}
-        </p>
+        <p className="text-sm text-sky-500">Already have an account?</p>
         <span
-          onClick={handleModeChange}
+          onClick={() => setMode("login")}
           className="cursor-pointer text-sky-600 text-xs !mt-0 font-semibold hover:underline"
         >
-          {mode === "login" ? "Register here" : "Login here"}
+          Login here
         </span>
       </form>
     </motion.div>

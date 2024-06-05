@@ -42,60 +42,70 @@ const Inventory = () => {
       className="p-6 bg-gray-900 min-h-screen"
     >
       <div className="flex justify-between items-center mb-4">
-        <input
-          type="text"
-          placeholder="Search items..."
-          className="p-2 rounded-lg border border-gray-300"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button
-          className="p-2 bg-sky-700 text-white rounded-lg hover:bg-sky-800 transition"
-          onClick={() => handleItemAdd()}
-        >
-          Add Item
-        </button>
+        {/* Heading */}
+        <h1 className="text-sky-50 text-2xl font-bold">Inventory/Stock Overview</h1>
+
+        <div className="flex gap-4">
+          {/* Search */}
+          <input
+            type="text"
+            placeholder="Search items..."
+            className="py-2 px-4 rounded-full border border-gray-300"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {/* Add */}
+          <button
+            className="py-2 px-4 rounded-full bg-sky-700 text-white hover:bg-sky-800 transition"
+            onClick={() => handleItemAdd()}
+          >
+            Add Item
+          </button>
+        </div>
       </div>
-      <table className="w-full text-left border-collapse rounded-lg overflow-x-auto">
-        <thead className="bg-sky-700 text-gray-200">
-          <tr>
-            <th className="p-4">Image</th>
-            <th className="p-4">Item Name</th>
-            <th className="p-4">Quantity</th>
-            <th className="p-4">Price</th>
-            <th className="p-4">Supplier</th>
-            <th className="p-4">Category</th>
-            <th className="p-4">Expiry Date</th>
-            <th className="p-4">Status</th>
-            <th className="p-4">Actions</th>
-          </tr>
-        </thead>
-        <tbody className="bg-gray-800 text-gray-400 text-sm">
-          {itemsLoading ? (
+
+      <div className="overflow-auto">
+        <table className="w-full text-left border-collapse rounded-lg overflow-hidden">
+          <thead className="bg-sky-700 text-gray-200">
             <tr>
-              <td colSpan="8" className="text-center p-4">
-                Loading...
-              </td>
+              <th className="p-4">Image</th>
+              <th className="p-4">Item Name</th>
+              <th className="p-4">Quantity</th>
+              <th className="p-4">Price</th>
+              <th className="p-4">Supplier</th>
+              <th className="p-4">Category</th>
+              <th className="p-4">Expiry Date</th>
+              <th className="p-4">Status</th>
+              <th className="p-4">Actions</th>
             </tr>
-          ) : filteredItems.length === 0 ? (
-            <tr>
-              <td colSpan="8" className="text-center p-4">
-                No items found.
-              </td>
-            </tr>
-          ) : (
-            filteredItems.map((item) => (
-              <InventoryRow
-                key={item._id}
-                item={item}
-                isEditable={editableRow === item._id}
-                onEdit={() => handleEdit(item._id)}
-                onCancelEdit={handleCancelEdit}
-              />
-            ))
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="bg-gray-800 text-gray-400 text-sm">
+            {itemsLoading ? (
+              <tr>
+                <td colSpan="8" className="text-center p-4">
+                  Loading...
+                </td>
+              </tr>
+            ) : filteredItems.length === 0 ? (
+              <tr>
+                <td colSpan="8" className="text-center p-4">
+                  No items found.
+                </td>
+              </tr>
+            ) : (
+              filteredItems.map((item) => (
+                <InventoryRow
+                  key={item._id}
+                  item={item}
+                  isEditable={editableRow === item._id}
+                  onEdit={() => handleEdit(item._id)}
+                  onCancelEdit={handleCancelEdit}
+                />
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </motion.div>
   );
 };

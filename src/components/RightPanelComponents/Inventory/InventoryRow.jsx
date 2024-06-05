@@ -73,6 +73,7 @@ const InventoryRow = ({ item, isEditable, onEdit, onCancelEdit }) => {
   };
 
   const handleDelete = async () => {
+    if (window.confirm(`Are you sure you want to delete ${item.itemName}`))
     try {
       await deleteItem(item._id);
       showToast("success", "Item deleted.");

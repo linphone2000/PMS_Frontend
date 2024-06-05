@@ -43,20 +43,27 @@ const Customer = () => {
       animate={{ opacity: 1, y: 0 }}
       className="p-6 bg-gray-900 min-h-screen"
     >
-      <div className="flex justify-between items-center mb-4">
-        <input
-          type="text"
-          placeholder="Search customers..."
-          className="p-2 rounded-lg border border-gray-300"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button
-          className="p-2 bg-sky-700 text-white rounded-lg hover:bg-sky-800 transition"
-          onClick={() => handleCustomerAdd()}
-        >
-          Add Customer
-        </button>
+      <div className="flex justify-between items-center mb-6">
+        {/* Heading */}
+        <h1 className="text-sky-50 text-2xl font-bold">Customer Overview</h1>
+
+        <div className="flex gap-4">
+          {/* Search */}
+          <input
+            type="text"
+            placeholder="Search customers..."
+            className="py-2 px-4 rounded-full border border-gray-300"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {/* Add */}
+          <button
+            className="py-2 px-4 rounded-full bg-sky-700 text-white hover:bg-sky-800 transition"
+            onClick={() => handleCustomerAdd()}
+          >
+            Add Customer
+          </button>
+        </div>
       </div>
       <table className="w-full text-left border-collapse rounded-lg overflow-hidden">
         <thead className="bg-sky-700 text-gray-200">

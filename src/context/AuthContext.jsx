@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [employeesLoading, setEmployeesLoading] = useState(true);
   const [employeeTableChanged, setEmployeeTableChanged] = useState(false);
 
-  // Fetch logged in user
+  // Fetch logged-in user
   useEffect(() => {
     const storedUser = localStorage.getItem("currentEmployee");
     if (storedUser) {
@@ -77,6 +77,57 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Error logging in user:", error);
       throw error;
+    }
+  };
+
+  // Request Code
+  const requestCode = async (email) => {
+    try {
+      const response = await axios.post(API_URL + "/users/request-code", {
+        email,
+      });
+      return response;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        throw new Error(error.response.data.message);
+      } else {
+        throw new Error("Error getting code");
+      }
+    }
+  };
+
+  // Validate Code
+  const validateCode = async (email, code) => {
+    try {
+      const response = await axios.post(API_URL + "/users/validate-code", {
+        email,
+        code,
+      });
+      return response;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        throw new Error(error.response.data.message);
+      } else {
+        throw new Error("Error validating code");
+      }
+    }
+  };
+
+  // Reset Password
+  const resetPassword = async (email, password, code) => {
+    try {
+      const response = await axios.post(API_URL + "/users/reset-password", {
+        email,
+        password,
+        code,
+      });
+      return response;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        throw new Error(error.response.data.message);
+      } else {
+        throw new Error("Error resetting password");
+      }
     }
   };
 
@@ -173,6 +224,9 @@ export const AuthProvider = ({ children }) => {
       currentEmployee,
       register,
       login,
+      requestCode,
+      validateCode,
+      resetPassword,
       updateEmployee,
       updateEmployees,
       deleteEmployee,

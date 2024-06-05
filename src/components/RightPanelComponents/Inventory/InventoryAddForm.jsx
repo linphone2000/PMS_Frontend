@@ -1,5 +1,5 @@
 // React
-import { useRef } from "react";
+import { useRef, useState } from "react";
 // Context
 import { useInventory } from "../../../context/InventoryContext";
 import { useSupplier } from "../../../context/SupplierContext";
@@ -32,6 +32,9 @@ const InventoryAddForm = () => {
     "Other",
   ];
 
+  // State
+  const [image, setImage] = useState();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const itemData = new FormData();
@@ -59,6 +62,15 @@ const InventoryAddForm = () => {
       console.error("Error adding item:", error);
       showToast("error", error.message);
     }
+  };
+
+  const handleFileUpload = (e) => {
+    e.preventDefault();
+    imageRef.current.click();
+  };
+
+  const handleFileChange = async (event) => {
+    setImage(event.target.files[0]);
   };
 
   return (
@@ -140,14 +152,33 @@ const InventoryAddForm = () => {
             />
           </div>
 
+          {/* Image Upload Input */}
           <div className="mb-4 col-span-2">
             <label className="block mb-1 text-gray-200">Image:</label>
-            <input
-              type="file"
-              ref={imageRef}
-              className="border border-gray-300 text-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-sky-500"
-            />
+            {/* Image */}
+            <div className="flex gap-4 items-center">
+              <button
+                onClick={handleFileUpload}
+                className="bg-sky-500 hover:bg-sky-600 max-h-12 text-white font-bold py-2 px-4 rounded-md mr-2 focus:outline-none focus:bg-sky-600"
+              >
+                Choose File
+              </button>
+              {image && (
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="Item Preview"
+                  className="mt-2 w-16 h-16 object-cover rounded-md"
+                />
+              )}
+              <input
+                type="file"
+                ref={imageRef}
+                onChange={handleFileChange}
+                className="opacity-0 w-0"
+              />
+            </div>
           </div>
+
           <div className="mb-4 col-span-2">
             <label className="block mb-1 text-gray-200">Status:</label>
             <select
