@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pharmacy Management System</title>
+    <title>Pharmacy Management System - Profile</title>
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
@@ -11,58 +11,58 @@
         .hidden { display: none; }
     </style>
 </head>
-<body class="bg-black">
+<body class="bg-slate-300">
 
-    <!-- Header -->
-    <header class="bg-blue-800 p-4 text-white">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Pharmacy Management System</h1>
+    <!-- Sidebar -->
+    <div class="flex">
+        <aside class="bg-blue-800 w-64 min-h-screen p-4 text-white">
+            <h1 class="text-2xl font-bold mb-8">Pharmacy Management System</h1>
             <nav>
-                <a href="index.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                <a href="inventory.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Inventory</a>
-                <a href="sale.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Sales</a>
-                <a href="report.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Reports</a>
-                <a href="edit.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                <a href="index.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Dashboard</a>
+                <a href="inventory.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Inventory</a>
+                <a href="sale.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Sales</a>
+                <a href="report.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Reports</a>
+                <a href="edit.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2 bg-blue-600">Profile</a>
             </nav>
-        </div>
-    </header>
+        </aside>
 
-    <!-- Main Content -->
-    <main class="container mx-auto mt-8">
-        <!-- Profile Section -->
-        <section id="profile" class="mb-8">
-            <h2 class="text-2xl font-semibold text-white mb-4">Profile</h2>
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <div id="view-profile">
-                    <p class="text-gray-700 mb-2"><strong>Name:</strong> John Doe</p>
-                    <p class="text-gray-700 mb-2"><strong>Email:</strong> john.doe@example.com</p>
-                    <p class="text-gray-700 mb-2"><strong>Phone:</strong> (123) 456-7890</p>
-                    <button onclick="toggleEditProfile()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md">Edit Profile</button>
-                </div>
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <!-- Profile Section -->
+            <section id="profile" class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Profile</h2>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div id="view-profile">
+                        <p class="text-gray-700 mb-2"><strong>Name:</strong> John Doe</p>
+                        <p class="text-gray-700 mb-2"><strong>Email:</strong> john.doe@example.com</p>
+                        <p class="text-gray-700 mb-2"><strong>Phone:</strong> (123) 456-7890</p>
+                        <button onclick="toggleEditProfile()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md">Edit Profile</button>
+                    </div>
 
-                <div id="edit-profile" class="hidden">
-                    <form id="profile-form">
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
-                            <input id="name" type="text" value="John Doe" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
-                            <input id="email" type="email" value="john.doe@example.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">Phone</label>
-                            <input id="phone" type="tel" value="(123) 456-7890" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <button type="button" onclick="saveProfile()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Save</button>
-                            <button type="button" onclick="toggleEditProfile()" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
-                        </div>
-                    </form>
+                    <div id="edit-profile" class="hidden">
+                        <form id="profile-form">
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
+                                <input id="name" type="text" value="John Doe" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+                                <input id="email" type="email" value="john.doe@example.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">Phone</label>
+                                <input id="phone" type="tel" value="(123) 456-7890" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <button type="button" onclick="saveProfile()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Save</button>
+                                <button type="button" onclick="toggleEditProfile()" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
+        </main>
+    </div>
 
     <!-- JavaScript to handle profile edit toggle and save -->
     <script>

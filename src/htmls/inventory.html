@@ -10,85 +10,85 @@
         .hidden { display: none; }
     </style>
 </head>
-<body class="bg-black">
+<body class="bg-gray-100">
 
-    <!-- Header -->
-    <header class="bg-blue-800 p-4 text-white">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Pharmacy Management System</h1>
+    <!-- Sidebar -->
+    <div class="flex">
+        <aside class="bg-blue-800 w-64 min-h-screen p-4 text-white">
+            <h1 class="text-2xl font-bold mb-8">Pharmacy Management System</h1>
             <nav>
-                <a href="index.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                <a href="inventory.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Inventory</a>
-                <a href="sale.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Sales</a>
-                <a href="report.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Reports</a>
-                <a href="edit.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                <a href="index.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Dashboard</a>
+                <a href="inventory.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2 bg-blue-600">Inventory</a>
+                <a href="sale.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Sales</a>
+                <a href="report.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Reports</a>
+                <a href="edit.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
             </nav>
-        </div>
-    </header>
+        </aside>
 
-    <!-- Main Content -->
-    <main class="container mx-auto mt-8">
-        <!-- Inventory Section -->
-        <section id="inventory" class="mb-8">
-            <h2 class="text-2xl font-semibold text-white mb-4">Inventory</h2>
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <table class="min-w-full bg-white">
-                    <thead>
-                        <tr>
-                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Item</th>
-                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Quantity</th>
-                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Expiry Date</th>
-                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="py-2 px-4 border-b border-gray-200">Paracetamol</td>
-                            <td class="py-2 px-4 border-b border-gray-200">150</td>
-                            <td class="py-2 px-4 border-b border-gray-200">2024-12-01</td>
-                            <td class="py-2 px-4 border-b border-gray-200">
-                                <button class="bg-blue-500 text-white px-3 py-1 rounded-md" onclick="editItem(this)">Update</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 px-4 border-b border-gray-200">Ibuprofen</td>
-                            <td class="py-2 px-4 border-b border-gray-200">200</td>
-                            <td class="py-2 px-4 border-b border-gray-200">2023-11-20</td>
-                            <td class="py-2 px-4 border-b border-gray-200">
-                                <button class="bg-blue-500 text-white px-3 py-1 rounded-md" onclick="editItem(this)">Update</button>
-                            </td>
-                        </tr>
-                        <!-- Add more rows as needed -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <!-- Inventory Section -->
+            <section id="inventory" class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Inventory</h2>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <table class="min-w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Item</th>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Quantity</th>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Expiry Date</th>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="py-2 px-4 border-b border-gray-200">Paracetamol</td>
+                                <td class="py-2 px-4 border-b border-gray-200">150</td>
+                                <td class="py-2 px-4 border-b border-gray-200">2024-12-01</td>
+                                <td class="py-2 px-4 border-b border-gray-200">
+                                    <button class="bg-blue-500 text-white px-3 py-1 rounded-md" onclick="editItem(this)">Update</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b border-gray-200">Ibuprofen</td>
+                                <td class="py-2 px-4 border-b border-gray-200">200</td>
+                                <td class="py-2 px-4 border-b border-gray-200">2023-11-20</td>
+                                <td class="py-2 px-4 border-b border-gray-200">
+                                    <button class="bg-blue-500 text-white px-3 py-1 rounded-md" onclick="editItem(this)">Update</button>
+                                </td>
+                            </tr>
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-        <!-- Update Item Modal -->
-        <div id="update-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center hidden">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
-                <h3 class="text-lg font-semibold text-gray-700 mb-4">Update Item</h3>
-                <form id="update-form">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="update-item">Item</label>
-                        <input id="update-item" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" disabled>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="update-quantity">Quantity</label>
-                        <input id="update-quantity" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="update-expiry">Expiry Date</label>
-                        <input id="update-expiry" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <button type="button" onclick="saveUpdate()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Save</button>
-                        <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
-                    </div>
-                </form>
+            <!-- Update Item Modal -->
+            <div id="update-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4">Update Item</h3>
+                    <form id="update-form">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="update-item">Item</label>
+                            <input id="update-item" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" disabled>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="update-quantity">Quantity</label>
+                            <input id="update-quantity" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="update-expiry">Expiry Date</label>
+                            <input id="update-expiry" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button type="button" onclick="saveUpdate()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Save</button>
+                            <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <!-- JavaScript to handle inventory update -->
     <script>

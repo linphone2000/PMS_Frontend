@@ -11,61 +11,61 @@
         .hidden { display: none; }
     </style>
 </head>
-<body class="bg-black">
+<body class="bg-gray-100">
 
-    <!-- Header -->
-    <header class="bg-blue-800 p-4 text-white">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Pharmacy Management System</h1>
+    <!-- Sidebar -->
+    <div class="flex">
+        <aside class="bg-blue-800 w-64 min-h-screen p-4 text-white">
+            <h1 class="text-2xl font-bold mb-8">Pharmacy Management System</h1>
             <nav>
-                <a href="index.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                <a href="inventory.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Inventory</a>
-                <a href="sale.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Sales</a>
-                <a href="report.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Reports</a>
-                <a href="edit.html" class="text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                <a href="index.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Dashboard</a>
+                <a href="inventory.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Inventory</a>
+                <a href="sale.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Sales</a>
+                <a href="report.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2 bg-blue-600">Reports</a>
+                <a href="edit.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
             </nav>
-        </div>
-    </header>
+        </aside>
 
-    <!-- Main Content -->
-    <main class="container mx-auto mt-8">
-        <!-- Reports Section -->
-        <section id="reports" class="mb-8">
-            <h2 class="text-2xl font-semibold text-white mb-4">Reports</h2>
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <div id="generate-report">
-                    <form id="report-form">
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="report-type">Report Type</label>
-                            <select id="report-type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                <option value="sales">Sales Report</option>
-                                <option value="inventory">Inventory Report</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="start-date">Start Date</label>
-                            <input id="start-date" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="end-date">End Date</label>
-                            <input id="end-date" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <button type="button" onclick="generateReport()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Generate Report</button>
-                        </div>
-                    </form>
-                </div>
-
-                <div id="view-report" class="hidden mt-4">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Report</h3>
-                    <div id="report-content" class="bg-gray-100 p-4 rounded-lg">
-                        <!-- Report content will be inserted here by JavaScript -->
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <!-- Reports Section -->
+            <section id="reports" class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Reports</h2>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div id="generate-report">
+                        <form id="report-form">
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="report-type">Report Type</label>
+                                <select id="report-type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <option value="sales">Sales Report</option>
+                                    <option value="inventory">Inventory Report</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="start-date">Start Date</label>
+                                <input id="start-date" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="end-date">End Date</label>
+                                <input id="end-date" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <button type="button" onclick="generateReport()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Generate Report</button>
+                            </div>
+                        </form>
                     </div>
-                    <button type="button" onclick="toggleReportForm()" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded-md">Back</button>
+
+                    <div id="view-report" class="hidden mt-4">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Report</h3>
+                        <div id="report-content" class="bg-gray-100 p-4 rounded-lg">
+                            <!-- Report content will be inserted here by JavaScript -->
+                        </div>
+                        <button type="button" onclick="toggleReportForm()" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded-md">Back</button>
+                    </div>
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
+        </main>
+    </div>
 
     <!-- JavaScript to handle report generation -->
     <script>
