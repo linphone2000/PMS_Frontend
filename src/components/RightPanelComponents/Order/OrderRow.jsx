@@ -2,10 +2,8 @@
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
 // State
 import { useState } from "react";
 // Context
@@ -150,8 +148,8 @@ const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
                 </TooltipTrigger>
                 {order.status == "Cancelled" ||
                 order.status == "Delivered" ? null : (
-                  <TooltipContent>
-                    <p>Edit Status</p>
+                  <TooltipContent className="bg-sky-600 border border-sky-600">
+                    <p className="text-sky-50">Edit Status</p>
                   </TooltipContent>
                 )}
               </Tooltip>
@@ -176,8 +174,8 @@ const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
                     <i className="fa-solid fa-file-invoice text-lg p-1.5 "></i>
                   </div>
                 </TooltipTrigger>
-                <TooltipContent>
-                  <p>Print Invoice</p>
+                <TooltipContent className="bg-emerald-600 border border-emerald-600">
+                  <p className="text-sky-50">Print Invoice</p>
                 </TooltipContent>
               </Tooltip>
             </div>

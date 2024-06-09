@@ -1,3 +1,9 @@
+// shadcn ui
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 // React
 import { useState } from "react";
 // Context
@@ -190,14 +196,31 @@ const SupplierRow = ({ supplier, isEditable, onEdit, onCancelEdit }) => {
           </div>
         ) : (
           <div className="flex justify-center gap-2">
-            <i
-              onClick={onEdit}
-              className="fa-solid fa-pen-to-square text-lg p-1.5 rounded-md text-gray-400 border border-gray-400 hover:cursor-pointer hover:border-sky-500 hover:text-sky-500 transition"
-            ></i>
-            <i
-              onClick={handleDelete}
-              className="fa-solid fa-trash text-lg p-1.5 rounded-md text-gray-400 border border-gray-400 hover:cursor-pointer hover:border-red-500 hover:text-red-500 transition"
-            ></i>
+            {/* Edit */}
+            <Tooltip>
+              <TooltipTrigger>
+                <i
+                  onClick={onEdit}
+                  className="fa-solid fa-pen-to-square text-lg p-1.5 rounded-md text-gray-400 border border-gray-400 hover:cursor-pointer hover:border-sky-500 hover:text-sky-500 transition"
+                ></i>
+              </TooltipTrigger>
+              <TooltipContent className="bg-sky-600 border border-sky-600">
+                <p className="text-sky-50">Edit</p>
+              </TooltipContent>
+            </Tooltip>
+
+            {/* Delete */}
+            <Tooltip>
+              <TooltipTrigger>
+                <i
+                  onClick={handleDelete}
+                  className="fa-solid fa-trash text-lg p-1.5 rounded-md text-gray-400 border border-gray-400 hover:cursor-pointer hover:border-red-500 hover:text-red-500 transition"
+                ></i>
+              </TooltipTrigger>
+              <TooltipContent className="bg-rose-500 border border-rose-500">
+                <p className="text-sky-50">Delete</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
         )}
       </td>
