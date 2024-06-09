@@ -16,6 +16,7 @@ export const OrderProvider = ({ children }) => {
   const [allOrders, setAllOrders] = useState([]);
   const [ordersLoading, setOrdersLoading] = useState(true);
   const [orderTableChanged, setOrderTableChanged] = useState(false);
+  const [invoice, setInvoice] = useState();
 
   // Fetch all orders
   useEffect(() => {
@@ -99,8 +100,10 @@ export const OrderProvider = ({ children }) => {
       addOrder,
       updateOrder,
       deleteOrder,
+      invoice,
+      setInvoice,
     }),
-    [allOrders, ordersLoading]
+    [allOrders, ordersLoading, invoice]
   );
 
   return (

@@ -176,12 +176,31 @@ const OrderAddForm = () => {
                 required
               >
                 <option value="">Select Item</option>
-                {allItems.map((invItem) => (
-                  <option key={invItem._id} value={invItem._id}>
-                    {invItem.itemName}
-                  </option>
-                ))}
+                {allItems
+                  .filter((invItem) => invItem.status !== "Pending")
+                  .map((invItem) => (
+                    <option key={invItem._id} value={invItem._id}>
+                      {invItem.itemName}
+                    </option>
+                  ))}
               </select>
+              {/* <select
+                value={selectedItem.itemID}
+                onChange={(e) =>
+                  handleItemChange(selectedItem.index, "itemID", e.target.value)
+                }
+                className="border border-gray-300 px-2 py-1 rounded-md w-full"
+                required
+              >
+                <option value="">Select Item</option>
+                {allItems
+                  .filter((invItem) => invItem.status !== "Pending")
+                  .map((invItem) => (
+                    <option key={invItem._id} value={invItem._id}>
+                      {invItem.itemName}
+                    </option>
+                  ))}
+              </select> */}
               <input
                 type="number"
                 placeholder="Quantity"
@@ -192,16 +211,9 @@ const OrderAddForm = () => {
                 className="border border-gray-300 px-2 py-1 rounded-md w-full"
                 required
               />
-              <input
-                type="number"
-                placeholder="Price"
-                value={item.price}
-                onChange={(e) =>
-                  handleItemChange(index, "price", e.target.value)
-                }
-                className="border border-gray-300 px-2 py-1 rounded-md w-full"
-                required
-              />
+              <p className="flex items-center ps-4 bg-white rounded-md border border-gray-300">
+                ${item.price * item.quantity}
+              </p>
               <button
                 type="button"
                 onClick={() => handleRemoveItem(index)}
