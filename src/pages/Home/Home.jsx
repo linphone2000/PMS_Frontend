@@ -1,3 +1,4 @@
+// React
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 // Components
@@ -24,6 +25,8 @@ import { useAuth } from "../../context/AuthContext";
 import { useUIModal } from "../../context/UIModalContext";
 // CSS
 import "./Home.css";
+// shadcn ui
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const Home = () => {
   // Context
@@ -64,7 +67,7 @@ const Home = () => {
 
             {/* Navbar */}
             <Navbar />
-            <div className="flex h-screen-body">
+            <div className="flex bg-gray-900 h-screen-body">
               {/* Left Panel */}
               <AnimatePresence>
                 {isSideBarOpen && (
@@ -81,39 +84,41 @@ const Home = () => {
               </AnimatePresence>
 
               {/* Right Panel */}
-              <motion.div
-                initial={{ width: "100%" }}
-                animate={{ width: isSideBarOpen ? "80%" : "100%" }}
-                transition={{ duration: 0.5 }}
-                className="right-panel overflow-y-auto relative"
-              >
-                {/* Collaspe button */}
-                <div className="absolute left-0">
-                  <button
-                    className="p-1 bg-gray-800 rounded-r-md border border-s-0 border-t-0 border-gray-800 hover:border-gray-500 hover:cursor-pointer transition"
-                    onClick={() => {
-                      setIsSideBarOpen((prev) => !prev);
-                    }}
-                  >
-                    {isSideBarOpen ? (
-                      <i className="fa-solid fa-chevron-left text-white"></i>
-                    ) : (
-                      <i className="fa-solid fa-chevron-right text-white"></i>
-                    )}
-                  </button>
-                </div>
+              <TooltipProvider>
+                <motion.div
+                  initial={{ width: "100%" }}
+                  animate={{ width: isSideBarOpen ? "80%" : "100%" }}
+                  transition={{ duration: 0.5 }}
+                  className="right-panel overflow-y-auto relative"
+                >
+                  {/* Collaspe button */}
+                  <div className="absolute left-0">
+                    <button
+                      className="p-1 bg-gray-800 rounded-r-md border border-s-0 border-t-0 border-gray-800 hover:border-gray-500 hover:cursor-pointer transition"
+                      onClick={() => {
+                        setIsSideBarOpen((prev) => !prev);
+                      }}
+                    >
+                      {isSideBarOpen ? (
+                        <i className="fa-solid fa-chevron-left text-white"></i>
+                      ) : (
+                        <i className="fa-solid fa-chevron-right text-white"></i>
+                      )}
+                    </button>
+                  </div>
 
-                <Routes>
-                  <Route path="/" Component={RootComponent} />
-                  <Route path="/dashboard" Component={Dashboard} />
-                  <Route path="/employee" Component={Employee} />
-                  <Route path="/customer" Component={Customer} />
-                  <Route path="/order" Component={Order} />
-                  <Route path="/inventory" Component={Inventory} />
-                  <Route path="/supplier" Component={Supplier} />
-                  <Route path="/profile" Component={Profile} />
-                </Routes>
-              </motion.div>
+                  <Routes>
+                    <Route path="/" Component={RootComponent} />
+                    <Route path="/dashboard" Component={Dashboard} />
+                    <Route path="/employee" Component={Employee} />
+                    <Route path="/customer" Component={Customer} />
+                    <Route path="/order" Component={Order} />
+                    <Route path="/inventory" Component={Inventory} />
+                    <Route path="/supplier" Component={Supplier} />
+                    <Route path="/profile" Component={Profile} />
+                  </Routes>
+                </motion.div>
+              </TooltipProvider>
             </div>
           </>
         ) : (

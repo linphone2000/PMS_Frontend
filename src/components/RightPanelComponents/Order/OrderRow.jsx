@@ -1,3 +1,12 @@
+// shadcn ui
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+// State
 import { useState } from "react";
 // Context
 import { useOrder } from "../../../context/OrderContext";
@@ -118,40 +127,59 @@ const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
             </div>
           ) : (
             <div className="flex justify-center gap-2">
-              <button
-                onClick={onEdit}
-                disabled={
-                  order.status == "Cancelled" || order.status == "Delivered"
-                }
-                className={`rounded-md transition ${
-                  order.status == "Cancelled" || order.status == "Delivered"
-                    ? "text-gray-600 border border-gray-600"
-                    : "text-gray-400 border border-gray-400"
-                }
-                ${
-                  order.status == "Cancelled" || order.status == "Delivered"
-                    ? "hover:cursor-not-allowed"
-                    : "hover:cursor-pointer hover:border-sky-500 hover:text-sky-500"
-                }`}
-              >
-                <i className="fa-solid fa-pen-to-square text-lg p-1.5"></i>
-              </button>
-              <button
-                onClick={handlePrintInvoice}
-                disabled={order.status == "Cancelled"}
-                className={`rounded-md transition ${
-                  order.status == "Cancelled"
-                    ? "text-gray-600 border border-gray-600"
-                    : "text-gray-400 border border-gray-400"
-                }
-                ${
-                  order.status == "Cancelled"
-                    ? "hover:cursor-not-allowed"
-                    : "hover:cursor-pointer hover:border-sky-500 hover:text-sky-500"
-                }`}
-              >
-                <i className="fa-solid fa-file-invoice text-lg p-1.5 "></i>
-              </button>
+              {/* Editing status */}
+              <Tooltip>
+                <TooltipTrigger>
+                  <div
+                    onClick={() => {
+                      if (
+                        order.status !== "Cancelled" &&
+                        order.status !== "Delivered"
+                      ) {
+                        onEdit();
+                      }
+                    }}
+                    className={`rounded-md transition ${
+                      order.status == "Cancelled" || order.status == "Delivered"
+                        ? "text-gray-600 border border-gray-600 hover:cursor-not-allowed"
+                        : "text-gray-400 border border-gray-400 hover:cursor-pointer hover:border-sky-500 hover:text-sky-500"
+                    }`}
+                  >
+                    <i className="fa-solid fa-pen-to-square text-lg p-1.5"></i>
+                  </div>
+                </TooltipTrigger>
+                {order.status == "Cancelled" ||
+                order.status == "Delivered" ? null : (
+                  <TooltipContent>
+                    <p>Edit Status</p>
+                  </TooltipContent>
+                )}
+              </Tooltip>
+
+              {/* Printing Invoice */}
+              <Tooltip>
+                <TooltipTrigger>
+                  <div
+                    onClick={handlePrintInvoice}
+                    disabled={order.status == "Cancelled"}
+                    className={`rounded-md transition ${
+                      order.status == "Cancelled"
+                        ? "text-gray-600 border border-gray-600"
+                        : "text-gray-400 border border-gray-400"
+                    }
+                    ${
+                      order.status == "Cancelled"
+                        ? "hover:cursor-not-allowed"
+                        : "hover:cursor-pointer hover:border-sky-500 hover:text-sky-500"
+                    }`}
+                  >
+                    <i className="fa-solid fa-file-invoice text-lg p-1.5 "></i>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Print Invoice</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           )}
         </td>
