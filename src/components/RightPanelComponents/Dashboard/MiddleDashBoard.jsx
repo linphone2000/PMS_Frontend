@@ -9,6 +9,10 @@ import { useInventory } from "../../../context/InventoryContext";
 import { useSupplier } from "../../../context/SupplierContext";
 import { useOrder } from "../../../context/OrderContext";
 import { useCustomer } from "../../../context/CustomerContext";
+import { useEffect, useState } from "react";
+import countTotalItems from "@/utils/count";
+import getExpiredItems from "@/utils/expired";
+import filterPendingOrders from "@/utils/pending";
 
 const MiddleDashBoard = () => {
   // Context
@@ -18,6 +22,27 @@ const MiddleDashBoard = () => {
   const { allSuppliers } = useSupplier();
   const { allOrders } = useOrder();
   const { allCustomers } = useCustomer();
+
+  // States
+  const [totelItems, setTotalItems] = useState(0);
+  const [expiredItems, setExpiredItems] = useState([]);
+  const [filteredOrders, setFilteredOrders] = useState([]);
+
+  // Effect
+  useEffect(() => {
+    const total = countTotalItems(allOrders);
+    setTotalItems(total);
+  }, [allOrders]);
+
+  useEffect(() => {
+    const expired = getExpiredItems(allItems);
+    setExpiredItems(expired);
+  }, [allItems]);
+
+  useEffect(() => {
+    const filtered = filterPendingOrders(allOrders);
+    setFilteredOrders(filtered);
+  }, [allOrders]);
 
   // Navigation
   const navigate = useNavigate();
@@ -80,6 +105,65 @@ const MiddleDashBoard = () => {
           buttonText={`Total Customers: ${allCustomers.length}`}
           onButtonClick={handleClick}
         />
+      </div>
+
+      <hr className="my-4 border-gray-400"></hr>
+
+      {/* Reports */}
+      <div className="flex justify-evenly gap-10">
+        {/* 1st box */}
+        <div className="w-3/5 border bg-sky-800 border-sky-300 rounded-md">
+          <div className="flex justify-between px-4 py-2 rounded-md items-center">
+            <p className="font-semibold text-lg">Inventory</p>
+            <div
+              onClick={() => handleClick("inventory")}
+              className="flex gap-2 items-center font-extralight text-gray-300 text-sm hover:scale-95 transition hover:cursor-pointer"
+            >
+              <p>Go to Inventory</p>
+              <i className="fa-solid fa-angles-right"></i>
+            </div>
+          </div>
+          <hr className="mx-4 border-sky-500"></hr>
+          <div className="flex justify-between px-4 py-2 rounded-md">
+            <div className="">
+              <p className="font-bold text-lg">{allItems.length}</p>
+              <p>Total number of medicine</p>
+            </div>
+            <div className="">
+              <div className="">
+                <p className="font-bold text-lg">{expiredItems.length}</p>
+                <p>Expired medicine</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 2nd box */}
+        <div className="w-3/5 border bg-sky-800 border-sky-300 rounded-md">
+          <div className="flex justify-between px-4 py-2 rounded-md items-center">
+            <p className="font-semibold text-lg">Sales</p>
+            <div
+              onClick={() => handleClick("order")}
+              className="flex gap-2 items-center font-extralight text-gray-300 text-sm hover:scale-95 transition hover:cursor-pointer"
+            >
+              <p>Go to Orders</p>
+              <i className="fa-solid fa-angles-right"></i>
+            </div>
+          </div>
+          <hr className="mx-4 border-sky-500"></hr>
+          <div className="flex justify-between px-4 py-2 rounded-md">
+            <div className="">
+              <p className="font-bold text-lg">{totelItems}</p>
+              <p>Quantity of medicine sold</p>
+            </div>
+            <div className="">
+              <div className="">
+                <p className="font-bold text-lg">{filteredOrders.length}</p>
+                <p>Number of pending order</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

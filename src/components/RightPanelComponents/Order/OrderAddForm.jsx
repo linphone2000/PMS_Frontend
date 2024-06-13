@@ -1,3 +1,12 @@
+// shadcn ui
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+// React
 import { useRef, useState } from "react";
 // Context
 import { useOrder } from "../../../context/OrderContext";
@@ -13,17 +22,19 @@ const OrderAddForm = () => {
   const { allItems } = useInventory();
 
   // Refs
-  const customerIDRef = useRef(null);
-  const paymentMethodRef = useRef(null);
   const deliveryAddressRef = useRef(null);
   const remarksRef = useRef(null);
-  const statusRef = useRef(null);
 
   // State
   const [items, setItems] = useState([
     { itemID: "", itemName: "", quantity: 1, price: 0 },
   ]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [selectedCustomerID, setSelectedCustomerID] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [expirationDate, setExpirationDate] = useState("");
 
   // Handlers
   const handleItemChange = (index, field, value) => {
@@ -57,8 +68,41 @@ const OrderAddForm = () => {
     );
   };
 
+  const handleCustomerChange = (value) => {
+    setSelectedCustomerID(value);
+  };
+
+  const handlePaymentMethodChange = (value) => {
+    setSelectedPaymentMethod(value);
+    // Clear card details when changing payment method
+    setCardNumber("");
+    setCvv("");
+    setExpirationDate("");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate card details if payment method is Banking
+    if (selectedPaymentMethod === "Banking") {
+      // Code source: Internet
+      const cardNumberRegex = /^\d{16}$/;
+      const cvvRegex = /^\d{3,4}$/;
+      const expirationDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+
+      if (!cardNumberRegex.test(cardNumber)) {
+        showToast("error", "Invalid card number. Must be 16 digits.");
+        return;
+      }
+      if (!cvvRegex.test(cvv)) {
+        showToast("error", "Invalid CVV. Must be 3 or 4 digits.");
+        return;
+      }
+      if (!expirationDateRegex.test(expirationDate)) {
+        showToast("error", "Invalid expiration date. Must be MM/YY format.");
+        return;
+      }
+    }
 
     // Check item quantities
     for (const item of items) {
@@ -75,10 +119,10 @@ const OrderAddForm = () => {
     }
 
     const orderData = {
-      customerID: customerIDRef.current.value,
+      customerID: selectedCustomerID,
       items,
       totalPrice,
-      paymentMethod: paymentMethodRef.current.value,
+      paymentMethod: selectedPaymentMethod,
       deliveryAddress: deliveryAddressRef.current.value,
       remarks: remarksRef.current.value,
       // status: statusRef.current.value,
@@ -94,6 +138,15 @@ const OrderAddForm = () => {
     }
   };
 
+  // Card image shower
+  const getCardImage = (cardNumber) => {
+    const firstDigit = cardNumber[0];
+    if (firstDigit === "4") return "visa.png";
+    if (firstDigit === "5") return "master.png";
+    if (firstDigit === "3") return "jcb.png";
+    return "defaultcard.png";
+  };
+
   return (
     <div>
       <div className="text-center bg-sky-700 py-6">
@@ -106,28 +159,97 @@ const OrderAddForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="mb-4">
             <label className="block mb-1 text-gray-200">Customer:</label>
-            <select
-              ref={customerIDRef}
-              className="border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-sky-500"
-              required
+            <Select
+              value={selectedCustomerID}
+              onValueChange={handleCustomerChange}
+              className="z-50"
             >
-              <option value="">Select Customer</option>
-              {allCustomers.map((customer) => (
-                <option key={customer._id} value={customer._id}>
-                  {customer.name}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger className="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-sky-500 z-50">
+                <SelectValue placeholder="Select Customer" />
+              </SelectTrigger>
+              <SelectContent className="z-50">
+                {allCustomers.map((customer) => (
+                  <SelectItem
+                    className="z-50"
+                    key={customer._id}
+                    value={customer._id}
+                  >
+                    {customer.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="mb-4">
             <label className="block mb-1 text-gray-200">Payment Method:</label>
-            <input
-              type="text"
-              ref={paymentMethodRef}
-              className="border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-sky-500"
-              required
-            />
+            <Select
+              value={selectedPaymentMethod}
+              onValueChange={handlePaymentMethodChange}
+              className="z-50"
+            >
+              <SelectTrigger className="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-sky-500 z-50">
+                <SelectValue placeholder="Select Payment Method" />
+              </SelectTrigger>
+              <SelectContent className="z-50">
+                <SelectItem className="z-50" value="Cash">
+                  Cash
+                </SelectItem>
+                <SelectItem className="z-50" value="Banking">
+                  Banking
+                </SelectItem>
+                {/* Add more payment methods as needed */}
+              </SelectContent>
+            </Select>
           </div>
+
+          {/* Card */}
+          {selectedPaymentMethod === "Banking" && (
+            <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-4 col-span-2">
+              <div>
+                <label className="block mb-1 text-gray-200">Card Number:</label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={cardNumber}
+                    onChange={(e) => setCardNumber(e.target.value)}
+                    className="border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-sky-500 pl-12"
+                    maxLength="16"
+                    required
+                  />
+                  <img
+                    src={getCardImage(cardNumber)}
+                    className="w-8 h-8 absolute top-1/2 transform -translate-y-1/2 left-2"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block mb-1 text-gray-200">CVV:</label>
+                <input
+                  type="text"
+                  value={cvv}
+                  onChange={(e) => setCvv(e.target.value)}
+                  className="border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-sky-500"
+                  placeholder="Eg: 123 or 1234"
+                  maxLength="4"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-1 text-gray-200">Expiration:</label>
+                <input
+                  type="text"
+                  value={expirationDate}
+                  onChange={(e) => setExpirationDate(e.target.value)}
+                  className="border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-sky-500"
+                  placeholder="MM/YY"
+                  required
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Address */}
           <div className="mb-4">
             <label className="block mb-1 text-gray-200">
               Delivery Address:
@@ -147,60 +269,39 @@ const OrderAddForm = () => {
               className="border border-gray-300 px-4 py-2 rounded-md w-full focus:outline-none focus:border-sky-500"
             />
           </div>
-          {/* <div className="mb-4">
-            <label className="block mb-1 text-gray-200">Status:</label>
-            <select
-              ref={statusRef}
-              className="border border-gray-300 bg-white px-4 py-2 rounded-md w-full focus:outline-none focus:border-sky-500"
-              required
-              disabled={true}
-            >
-              <option value="Pending">Pending</option>
-              <option value="Delivered">Delivered</option>
-            </select>
-          </div> */}
         </div>
         <div className="mb-4">
-          <label className="block mb-1 text-gray-200">Items:</label>
+          <label className="block mb-2 text-gray-200">Items:</label>
           {items.map((item, index) => (
             <div
               key={index}
-              className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-2"
+              className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4"
             >
-              <select
+              <Select
                 value={item.itemID}
-                onChange={(e) =>
-                  handleItemChange(index, "itemID", e.target.value)
+                onValueChange={(value) =>
+                  handleItemChange(index, "itemID", value)
                 }
-                className="border border-gray-300 px-2 py-1 rounded-md w-full"
-                required
+                className="z-50"
               >
-                <option value="">Select Item</option>
-                {allItems
-                  .filter((invItem) => invItem.status !== "Pending")
-                  .map((invItem) => (
-                    <option key={invItem._id} value={invItem._id}>
-                      {invItem.itemName}
-                    </option>
-                  ))}
-              </select>
-              {/* <select
-                value={selectedItem.itemID}
-                onChange={(e) =>
-                  handleItemChange(selectedItem.index, "itemID", e.target.value)
-                }
-                className="border border-gray-300 px-2 py-1 rounded-md w-full"
-                required
-              >
-                <option value="">Select Item</option>
-                {allItems
-                  .filter((invItem) => invItem.status !== "Pending")
-                  .map((invItem) => (
-                    <option key={invItem._id} value={invItem._id}>
-                      {invItem.itemName}
-                    </option>
-                  ))}
-              </select> */}
+                <SelectTrigger className="w-full border border-gray-300 px-2 py-1 rounded-md z-50">
+                  <SelectValue placeholder="Select Item" />
+                </SelectTrigger>
+                <SelectContent className="z-50">
+                  {allItems
+                    .filter((invItem) => invItem.status !== "Pending")
+                    .map((invItem) => (
+                      <SelectItem
+                        className="z-50"
+                        key={invItem._id}
+                        value={invItem._id}
+                      >
+                        {invItem.itemName}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+
               <input
                 type="number"
                 placeholder="Quantity"
@@ -217,7 +318,7 @@ const OrderAddForm = () => {
               <button
                 type="button"
                 onClick={() => handleRemoveItem(index)}
-                className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                className="p-2 outline outline-rose-500 text-rose-500 hover:text-white rounded-lg hover:bg-rose-600 transition"
               >
                 Remove
               </button>
@@ -226,7 +327,7 @@ const OrderAddForm = () => {
           <button
             type="button"
             onClick={handleAddItem}
-            className="p-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+            className="p-2 outline outline-emerald-500 text-emerald-500 hover:text-white rounded-lg hover:bg-emerald-600 transition"
           >
             Add Item
           </button>

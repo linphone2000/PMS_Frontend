@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.0.7",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
@@ -36,6 +38,7 @@
     "react-router-dom": "^6.23.1",
     "react-select": "^5.8.0",
     "react-toastify": "^10.0.5",
+    "react-transition-group": "^4.4.5",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7"
   },

@@ -9,7 +9,7 @@ const RootComponent = () => {
           alt="Pharmacy"
           className="w-full h-64 object-cover rounded-lg mb-4"
         />
-        <h1 className="text-3xl font-bold mb-4 text-sky-300">Welcome to PharmaManage</h1>
+        <h1 className="text-3xl font-bold mb-4 text-sky-300">Welcome to Pharmacy Management System</h1>
         <p className="text-sky-200">
           Your comprehensive solution for pharmacy management.
         </p>

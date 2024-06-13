@@ -1,5 +1,5 @@
 .modal-overlay {
-    z-index: 999;
+    z-index: 40;
     position: fixed;
     top: 0;
     left: 0;
@@ -28,7 +28,7 @@
     background-color: white;
     border-radius: 8px;
     max-width: 80%;
-    /* max-height: 80%; */
+    max-height: 90%;
     overflow: auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     /* background-color: #DCD7C9; */
