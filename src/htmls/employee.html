@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Management System</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <!-- Sidebar -->
+    <div class="flex">
+        <aside class="bg-blue-800 w-64 min-h-screen p-4 text-white">
+            <h1 class="text-2xl font-bold mb-8">Pharmacy Management System</h1>
+            <nav>
+                <a href="index.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2 bg-blue-600">Dashboard</a>
+                <a href="inventory.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Inventory</a>
+                <a href="sale.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Sales</a>
+                <a href="report.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium mb-2">Reports</a>
+                <a href="edit.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                <a href="employee.html" class="block text-white px-3 py-2 rounded-md text-sm font-medium">Employee</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <!-- Employee Management Section -->
+            <section id="employee-management" class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Employee Management</h2>
+                
+                <!-- Insert Employee Form -->
+                <div class="bg-slate-700 p-6 rounded-lg shadow-lg mb-8">
+                    <h3 class="text-lg font-semibold text-black mb-4">Insert Employee</h3>
+                    <form id="insert-employee-form">
+                        <div class="mb-4">
+                            <label class="block text-black mb-2" for="insert-employee-name">Name</label>
+                            <input type="text" id="insert-employee-name" class="w-full px-4 py-2 rounded-md bg-gray-200">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-black mb-2" for="insert-employee-position">Position</label>
+                            <input type="text" id="insert-employee-position" class="w-full px-4 py-2 rounded-md bg-gray-200">
+                        </div>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Add Employee</button>
+                    </form>
+                </div>
+
+                <!-- Update Employee Form -->
+                <div class="bg-slate-700 p-6 rounded-lg shadow-lg mb-8">
+                    <h3 class="text-lg font-semibold text-black mb-4">Update Employee</h3>
+                    <form id="update-employee-form">
+                        <div class="mb-4">
+                            <label class="block text-black mb-2" for="update-employee-id">Employee ID</label>
+                            <input type="text" id="update-employee-id" class="w-full px-4 py-2 rounded-md bg-gray-200">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-black mb-2" for="update-employee-name">Name</label>
+                            <input type="text" id="update-employee-name" class="w-full px-4 py-2 rounded-md bg-gray-200">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-black mb-2" for="update-employee-position">Position</label>
+                            <input type="text" id="update-employee-position" class="w-full px-4 py-2 rounded-md bg-gray-200">
+                        </div>
+                        <button type="submit" class="bg-blue-500 text-black px-4 py-2 rounded-md">Update Employee</button>
+                    </form>
+                </div>
+
+                <!-- Delete Employee Form -->
+                <div class="bg-slate-700 p-6 rounded-lg shadow-lg mb-8">
+                    <h3 class="text-lg font-semibold text-black mb-4">Delete Employee</h3>
+                    <form id="delete-employee-form">
+                        <div class="mb-4">
+                            <label class="block text-black mb-2" for="delete-employee-id">Employee ID</label>
+                            <input type="text" id="delete-employee-id" class="w-full px-4 py-2 rounded-md bg-gray-200">
+                        </div>
+                        <button type="submit" class="bg-red-500 text-black px-4 py-2 rounded-md">Delete Employee</button>
+                    </form>
+                </div>
+                
+                <!-- Employee List -->
+                <div class="bg-slate-700 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-lg font-semibold text-black mb-4">Employee List</h3>
+                    <table class="min-w-full bg-slate-700">
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">ID</th>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Name</th>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">Position</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employee-list">
+                            <!-- Employee rows will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        let employees = [];
+        const employeeList = document.getElementById('employee-list');
+
+        function renderEmployeeList() {
+            employeeList.innerHTML = '';
+            employees.forEach((employee, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="py-2 px-4 border-b border-gray-200">${index + 1}</td>
+                    <td class="py-2 px-4 border-b border-gray-200">${employee.name}</td>
+                    <td class="py-2 px-4 border-b border-gray-200">${employee.position}</td>
+                `;
+                employeeList.appendChild(row);
+            });
+        }
+
+        document.getElementById('insert-employee-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('insert-employee-name').value;
+            const position = document.getElementById('insert-employee-position').value;
+            employees.push({ name, position });
+            renderEmployeeList();
+            e.target.reset();
+        });
+
+        document.getElementById('update-employee-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('update-employee-id').value, 10) - 1;
+            const name = document.getElementById('update-employee-name').value;
+            const position = document.getElementById('update-employee-position').value;
+            if (employees[id]) {
+                employees[id] = { name, position };
+                renderEmployeeList();
+                e.target.reset();
+            } else {
+                alert('Employee not found');
+            }
+        });
+
+        document.getElementById('delete-employee-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = parseInt(document.getElementById('delete-employee-id').value, 10) - 1;
+            if (employees[id]) {
+                employees.splice(id, 1);
+                renderEmployeeList();
+                e.target.reset();
+            } else {
+                alert('Employee not found');
+            }
+        });
+
+        renderEmployeeList();
+    </script>
+</body>
+</html>
