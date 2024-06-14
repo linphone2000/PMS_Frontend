@@ -107,7 +107,7 @@ const MiddleDashBoard = () => {
         />
       </div>
 
-      <hr className="my-4 border-gray-400"></hr>
+      <hr className="my-4 border-sky-500"></hr>
 
       {/* Reports */}
       <div className="flex justify-evenly gap-10">
@@ -117,10 +117,10 @@ const MiddleDashBoard = () => {
             <p className="font-semibold text-lg">Inventory</p>
             <div
               onClick={() => handleClick("inventory")}
-              className="flex gap-2 items-center font-extralight text-gray-300 text-sm hover:scale-95 transition hover:cursor-pointer"
+              className="flex gap-2 items-center font-extralight text-sm hover:scale-95 transition hover:cursor-pointer"
             >
-              <p>Go to Inventory</p>
-              <i className="fa-solid fa-angles-right"></i>
+              <p className="text-sky-300">Go to Inventory</p>
+              <i className="fa-solid fa-angles-right text-sky-300"></i>
             </div>
           </div>
           <hr className="mx-4 border-sky-500"></hr>
@@ -144,10 +144,10 @@ const MiddleDashBoard = () => {
             <p className="font-semibold text-lg">Sales</p>
             <div
               onClick={() => handleClick("order")}
-              className="flex gap-2 items-center font-extralight text-gray-300 text-sm hover:scale-95 transition hover:cursor-pointer"
+              className="flex gap-2 items-center font-extralight text-sm hover:scale-95 transition hover:cursor-pointer"
             >
-              <p>Go to Orders</p>
-              <i className="fa-solid fa-angles-right"></i>
+              <p className="text-sky-300">Go to Orders</p>
+              <i className="fa-solid fa-angles-right text-sky-300"></i>
             </div>
           </div>
           <hr className="mx-4 border-sky-500"></hr>

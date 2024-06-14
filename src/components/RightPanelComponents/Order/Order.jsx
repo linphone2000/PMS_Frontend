@@ -1,5 +1,16 @@
+// React
 import { useState } from "react";
 import { motion } from "framer-motion";
+// shadcn ui
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 // Component
 import OrderRow from "./OrderRow";
 // Context
@@ -17,10 +28,15 @@ const Orders = () => {
   // States
   const [searchTerm, setSearchTerm] = useState("");
   const [editableRow, setEditableRow] = useState(null);
+  const [statusFilter, setStatusFilter] = useState("All");
 
-  const filteredOrders = allOrders.filter((order) =>
-    order.customerID.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredOrders = allOrders
+    .filter((order) =>
+      order.customerID.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter((order) =>
+      statusFilter === "All" ? true : order.status === statusFilter
+    );
 
   const handleOrderAdd = () => {
     handleSetModalForm("orderadd");
@@ -51,6 +67,24 @@ const Orders = () => {
             <h1 className="text-sky-50 text-2xl font-bold">Order Overview</h1>
 
             <div className="flex gap-4">
+              {/* Status Filter */}
+              <Select
+                value={statusFilter}
+                onValueChange={(value) => setStatusFilter(value)}
+              >
+                <SelectTrigger className="w-[180px] rounded-full">
+                  <SelectValue placeholder="Select Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Status</SelectLabel>
+                    <SelectItem value="All">All</SelectItem>
+                    <SelectItem value="Delivered">Delivered</SelectItem>
+                    <SelectItem value="Pending">Pending</SelectItem>
+                    <SelectItem value="Cancelled">Cancelled</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
               {/* Search */}
               <input
                 type="text"

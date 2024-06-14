@@ -158,7 +158,11 @@ const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
               <Tooltip>
                 <TooltipTrigger>
                   <div
-                    onClick={handlePrintInvoice}
+                    onClick={() => {
+                      if (order.status !== "Cancelled") {
+                        handlePrintInvoice();
+                      }
+                    }}
                     disabled={order.status == "Cancelled"}
                     className={`rounded-md transition ${
                       order.status == "Cancelled"
@@ -174,9 +178,11 @@ const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
                     <i className="fa-solid fa-file-invoice text-lg p-1.5 "></i>
                   </div>
                 </TooltipTrigger>
-                <TooltipContent className="bg-emerald-600 border border-emerald-600">
-                  <p className="text-sky-50">Print Invoice</p>
-                </TooltipContent>
+                {order.status !== "Cancelled" && (
+                  <TooltipContent className="bg-emerald-600 border border-emerald-600">
+                    <p className="text-sky-50">Print Invoice</p>
+                  </TooltipContent>
+                )}
               </Tooltip>
             </div>
           )}
