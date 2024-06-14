@@ -2,6 +2,7 @@
 import { useNavigate } from "react-router-dom";
 // Components
 import InfoBox from "./InfoBox";
+import ReportBox from "./ReportBox";
 // Context
 import { useUIModal } from "../../../context/UIModalContext";
 import { useAuth } from "../../../context/AuthContext";
@@ -24,11 +25,17 @@ const MiddleDashBoard = () => {
   const { allCustomers } = useCustomer();
 
   // States
-  const [totelItems, setTotalItems] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
   const [expiredItems, setExpiredItems] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
+  const [mostSoldItem, setMostSoldItem] = useState({ itemName: "", count: 0 });
+  const [leastSoldItem, setLeastSoldItem] = useState({
+    itemName: "",
+    count: 0,
+  });
+  const [totalSales, setTotalSales] = useState(0);
 
-  // Effect
+  // Effects
   useEffect(() => {
     const total = countTotalItems(allOrders);
     setTotalItems(total);
@@ -42,6 +49,45 @@ const MiddleDashBoard = () => {
   useEffect(() => {
     const filtered = filterPendingOrders(allOrders);
     setFilteredOrders(filtered);
+  }, [allOrders]);
+
+  useEffect(() => {
+    const itemCounts = {};
+
+    allOrders.forEach((order) => {
+      order.items.forEach((item) => {
+        itemCounts[item.itemName] =
+          (itemCounts[item.itemName] || 0) + item.quantity;
+      });
+    });
+
+    const mostSold = Object.entries(itemCounts).reduce(
+      (acc, [itemName, count]) => {
+        if (count > acc.count) {
+          return { itemName, count };
+        }
+        return acc;
+      },
+      { itemName: "", count: 0 }
+    );
+
+    const leastSold = Object.entries(itemCounts).reduce(
+      (acc, [itemName, count]) => {
+        if (acc.count === 0 || count < acc.count) {
+          return { itemName, count };
+        }
+        return acc;
+      },
+      { itemName: "", count: 0 }
+    );
+
+    setMostSoldItem(mostSold);
+    setLeastSoldItem(leastSold);
+  }, [allOrders]);
+
+  useEffect(() => {
+    const total = allOrders.reduce((acc, order) => acc + order.totalPrice, 0);
+    setTotalSales(total);
   }, [allOrders]);
 
   // Navigation
@@ -110,60 +156,43 @@ const MiddleDashBoard = () => {
       <hr className="my-4 border-sky-500"></hr>
 
       {/* Reports */}
-      <div className="flex justify-evenly gap-10">
-        {/* 1st box */}
-        <div className="w-3/5 border bg-sky-800 border-sky-300 rounded-md">
-          <div className="flex justify-between px-4 py-2 rounded-md items-center">
-            <p className="font-semibold text-lg">Inventory</p>
-            <div
-              onClick={() => handleClick("inventory")}
-              className="flex gap-2 items-center font-extralight text-sm hover:scale-95 transition hover:cursor-pointer"
-            >
-              <p className="text-sky-300">Go to Inventory</p>
-              <i className="fa-solid fa-angles-right text-sky-300"></i>
-            </div>
-          </div>
-          <hr className="mx-4 border-sky-500"></hr>
-          <div className="flex justify-between px-4 py-2 rounded-md">
-            <div className="">
-              <p className="font-bold text-lg">{allItems.length}</p>
-              <p>Total number of medicine</p>
-            </div>
-            <div className="">
-              <div className="">
-                <p className="font-bold text-lg">{expiredItems.length}</p>
-                <p>Expired medicine</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* 2nd box */}
-        <div className="w-3/5 border bg-sky-800 border-sky-300 rounded-md">
-          <div className="flex justify-between px-4 py-2 rounded-md items-center">
-            <p className="font-semibold text-lg">Sales</p>
-            <div
-              onClick={() => handleClick("order")}
-              className="flex gap-2 items-center font-extralight text-sm hover:scale-95 transition hover:cursor-pointer"
-            >
-              <p className="text-sky-300">Go to Orders</p>
-              <i className="fa-solid fa-angles-right text-sky-300"></i>
-            </div>
-          </div>
-          <hr className="mx-4 border-sky-500"></hr>
-          <div className="flex justify-between px-4 py-2 rounded-md">
-            <div className="">
-              <p className="font-bold text-lg">{totelItems}</p>
-              <p>Quantity of medicine sold</p>
-            </div>
-            <div className="">
-              <div className="">
-                <p className="font-bold text-lg">{filteredOrders.length}</p>
-                <p>Number of pending order</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="grid grid-cols-2 justify-evenly gap-10">
+        <ReportBox
+          title="Inventory"
+          mainStat={allItems.length}
+          mainStatLabel="Total number of medicine"
+          secondaryStat={expiredItems.length}
+          secondaryStatLabel="Expired medicine"
+          handleClick={handleClick}
+          page="inventory"
+        />
+        <ReportBox
+          title="Sales"
+          mainStat={totalItems}
+          mainStatLabel="Quantity of medicine sold"
+          secondaryStat={filteredOrders.length}
+          secondaryStatLabel="Number of pending orders"
+          handleClick={handleClick}
+          page="order"
+        />
+        <ReportBox
+          title="Most Sold Item"
+          mainStat={mostSoldItem.count}
+          mainStatLabel="Quantity Sold"
+          secondaryStat="Medicine Name"
+          secondaryStatLabel={mostSoldItem.itemName}
+          handleClick={handleClick}
+          page="inventory"
+        />
+        <ReportBox
+          title="Total Sales"
+          mainStat={`$${totalSales.toFixed(2)}`}
+          mainStatLabel="Total Sales Amount"
+          secondaryStat=""
+          secondaryStatLabel=""
+          handleClick={handleClick}
+          page="sales"
+        />
       </div>
     </div>
   );

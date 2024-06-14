@@ -1,12 +1,7 @@
 // React
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 // Context
-import { useAuth } from "../../../context/AuthContext";
-import { useCustomer } from "../../../context/CustomerContext";
-import { useInventory } from "../../../context/InventoryContext";
 import { useOrder } from "../../../context/OrderContext";
-import { useSupplier } from "../../../context/SupplierContext";
 // date-fns
 import {
   format,
@@ -15,15 +10,10 @@ import {
   startOfYear,
   isWithinInterval,
 } from "date-fns";
-import { AnimatePresence } from "framer-motion";
 
 const DetailsDashboard = () => {
   // Context
-  const { allEmployees } = useAuth();
-  const { allCustomers } = useCustomer();
-  const { allItems } = useInventory();
   const { allOrders } = useOrder();
-  const { allSuppliers } = useSupplier();
 
   // States
   const [filter, setFilter] = useState("daily");
