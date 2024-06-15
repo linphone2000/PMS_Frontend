@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 // shadcn ui
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -39,6 +40,7 @@ const Orders = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [editableRow, setEditableRow] = useState(null);
   const [statusFilter, setStatusFilter] = useState("All");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState({
     customerName: true,
     items: true,
@@ -139,32 +141,35 @@ const Orders = () => {
             </Select>
 
             {/* Column Visibility Checkboxes */}
-            <DropdownMenu>
-              <DropdownMenuTrigger className="py-2 px-4 rounded-full bg-sky-700 text-white hover:bg-sky-800 transition">
+            <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+              <DropdownMenuTrigger
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="py-2 px-4 rounded-full bg-sky-700 text-white hover:bg-sky-800 transition"
+              >
                 Columns
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-gray-700 text-white">
-                <DropdownMenuLabel className="text-white">
+              <DropdownMenuContent className="bg-white text-white">
+                <DropdownMenuLabel className="text-black">
                   Table Data
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className="bg-gray-200" />
                 {Object.keys(visibleColumns).map((column) => (
                   <DropdownMenuItem
                     key={column}
                     asChild
-                    className="hover:bg-gray-600"
+                    className=""
+                    onClick={(e) => e.preventDefault()}
                   >
-                    <label className="flex items-center space-x-2 p-2 rounded-md dropdown-label hover:cursor-pointer">
-                      <input
-                        type="checkbox"
+                    <div className="flex items-center space-x-2 p-2 rounded-md dropdown-label hover:cursor-pointer">
+                      <Switch
                         checked={visibleColumns[column]}
-                        onChange={() => toggleColumnVisibility(column)}
-                        className="custom-checkbox"
+                        onCheckedChange={() => toggleColumnVisibility(column)}
+                        className="custom-switch"
                       />
-                      <span className="text-white capitalize">
+                      <p className="text-black capitalize">
                         {column.replace(/([A-Z])/g, " $1")}
-                      </span>
-                    </label>
+                      </p>
+                    </div>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
