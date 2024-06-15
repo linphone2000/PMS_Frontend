@@ -27,13 +27,15 @@ const ProfileInfo = () => {
       <div className="bg-sky-700 px-3 py-2 rounded-lg flex gap-2">
         {/* Profile picture */}
         <div className="w-1/4 flex items-center justify-center">
-          <div className="w-14 h-14 ">
-            {currentEmployee.image !== null && (
+          <div className="w-14 h-14 flex items-center justify-center">
+            {currentEmployee.image ? (
               <img
                 src={`${IMG_URL}/${currentEmployee.image}`}
                 alt="Profile Picture"
                 className="rounded-xl object-cover aspect-square border border-gray-400"
               />
+            ) : (
+              <FaUserAlt className="text-gray-400 text-4xl" />
             )}
           </div>
         </div>

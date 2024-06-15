@@ -75,8 +75,11 @@ export const AuthProvider = ({ children }) => {
         return response;
       }
     } catch (error) {
-      console.error("Error logging in user:", error);
-      throw error;
+      if (error.response && error.response.data.message) {
+        throw new Error(error.response.data.message);
+      } else {
+        throw new Error("Error logging in user");
+      }
     }
   };
 

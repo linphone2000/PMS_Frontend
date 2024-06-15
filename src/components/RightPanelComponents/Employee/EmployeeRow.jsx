@@ -11,6 +11,7 @@ import { useAuth } from "../../../context/AuthContext";
 import { formatRoleName } from "../../../utils/formatter";
 import { useUIModal } from "../../../context/UIModalContext";
 import { AnimatePresence, motion } from "framer-motion";
+import { FaUserAlt } from "react-icons/fa";
 
 const EmployeeRow = ({ employee, isEditable, onEdit, onCancelEdit }) => {
   // Context
@@ -77,7 +78,7 @@ const EmployeeRow = ({ employee, isEditable, onEdit, onCancelEdit }) => {
     <tr className="hover:bg-sky-800 transition-colors duration-300">
       <td className="flex p-4 relative">
         <div
-          className="relative w-16 h-16 overflow-hidden shadow-lg bg-gray-700 flex items-center justify-center"
+          className="relative w-16 h-16 rounded-md overflow-hidden shadow-lg bg-gray-700 flex items-center justify-center"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
@@ -94,11 +95,7 @@ const EmployeeRow = ({ employee, isEditable, onEdit, onCancelEdit }) => {
               alt="New Profile Picture"
             />
           ) : (
-            <img
-              src="default_profile.jpeg"
-              alt="Default Profile"
-              className="w-16 h-16 object-cover rounded-md"
-            />
+            <FaUserAlt className="text-gray-400 text-4xl" />
           )}
           {isEditable && isHovered && (
             <motion.div

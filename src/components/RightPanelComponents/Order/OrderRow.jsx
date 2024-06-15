@@ -10,7 +10,13 @@ import { useState } from "react";
 import { useOrder } from "../../../context/OrderContext";
 import { useUIModal } from "../../../context/UIModalContext";
 
-const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
+const OrderRow = ({
+  order,
+  isEditable,
+  onEdit,
+  onCancelEdit,
+  visibleColumns,
+}) => {
   // Context
   const { updateOrder, deleteOrder, setInvoice } = useOrder();
   const { showToast, handleSetModalForm, handleOpenModal } = useUIModal();
@@ -56,24 +62,40 @@ const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
   };
 
   return (
-    <>
-      <tr className="hover:bg-sky-800 transition-colors duration-300">
+    <tr className="hover:bg-sky-800 transition-colors duration-300">
+      {visibleColumns.customerName && (
         <td className="p-4">{order.customerID.name}</td>
+      )}
+      {visibleColumns.items && (
         <td className="p-4">
           {order.items.map((item) => item.itemName).join(", ")}
         </td>
+      )}
+      {visibleColumns.quantity && (
         <td className="p-4">
           {order.items.map((item) => item.quantity).join(", ")}
         </td>
+      )}
+      {visibleColumns.price && (
         <td className="p-4">
           {order.items.map((item) => `$${item.price.toFixed(2)}`).join(", ")}
         </td>
+      )}
+      {visibleColumns.totalPrice && (
         <td className="p-4">{order.totalPrice.toFixed(2)}</td>
+      )}
+      {visibleColumns.orderDate && (
         <td className="p-4">
           {new Date(order.orderDate).toLocaleDateString()}
         </td>
+      )}
+      {visibleColumns.paymentMethod && (
         <td className="p-4">{order.paymentMethod}</td>
+      )}
+      {visibleColumns.deliveryAddress && (
         <td className="p-4">{order.deliveryAddress}</td>
+      )}
+      {visibleColumns.remarks && (
         <td className="p-4">
           {isEditable ? (
             <input
@@ -86,6 +108,8 @@ const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
             remarks
           )}
         </td>
+      )}
+      {visibleColumns.status && (
         <td className="p-4">
           {isEditable ? (
             <select
@@ -111,6 +135,8 @@ const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
             </p>
           )}
         </td>
+      )}
+      {visibleColumns.actions && (
         <td className="p-4 text-center">
           {isEditable ? (
             <div className="flex gap-2 justify-center">
@@ -187,8 +213,8 @@ const OrderRow = ({ order, isEditable, onEdit, onCancelEdit }) => {
             </div>
           )}
         </td>
-      </tr>
-    </>
+      )}
+    </tr>
   );
 };
 

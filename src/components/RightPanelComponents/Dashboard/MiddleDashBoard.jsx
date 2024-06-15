@@ -191,7 +191,7 @@ const MiddleDashBoard = () => {
           secondaryStat=""
           secondaryStatLabel=""
           handleClick={handleClick}
-          page="sales"
+          page="order"
         />
       </div>
     </div>

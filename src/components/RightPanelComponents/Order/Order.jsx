@@ -11,6 +11,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+// CSS
+import "./Order.css";
 // Component
 import OrderRow from "./OrderRow";
 // Context
@@ -29,6 +39,19 @@ const Orders = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [editableRow, setEditableRow] = useState(null);
   const [statusFilter, setStatusFilter] = useState("All");
+  const [visibleColumns, setVisibleColumns] = useState({
+    customerName: true,
+    items: true,
+    quantity: true,
+    price: true,
+    totalPrice: true,
+    orderDate: true,
+    paymentMethod: true,
+    deliveryAddress: true,
+    remarks: true,
+    status: true,
+    actions: true,
+  });
 
   const filteredOrders = allOrders
     .filter((order) =>
@@ -51,6 +74,13 @@ const Orders = () => {
     setEditableRow(null);
   };
 
+  const toggleColumnVisibility = (column) => {
+    setVisibleColumns((prevState) => ({
+      ...prevState,
+      [column]: !prevState[column],
+    }));
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -100 }}
@@ -67,24 +97,6 @@ const Orders = () => {
             <h1 className="text-sky-50 text-2xl font-bold">Order Overview</h1>
 
             <div className="flex gap-4">
-              {/* Status Filter */}
-              <Select
-                value={statusFilter}
-                onValueChange={(value) => setStatusFilter(value)}
-              >
-                <SelectTrigger className="w-[180px] rounded-full">
-                  <SelectValue placeholder="Select Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Status</SelectLabel>
-                    <SelectItem value="All">All</SelectItem>
-                    <SelectItem value="Delivered">Delivered</SelectItem>
-                    <SelectItem value="Pending">Pending</SelectItem>
-                    <SelectItem value="Cancelled">Cancelled</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
               {/* Search */}
               <input
                 type="text"
@@ -103,22 +115,88 @@ const Orders = () => {
             </div>
           </div>
 
+          {/* Separator */}
+          <hr className="border-gray-500"></hr>
+
+          <div className="flex gap-4 justify-end my-2">
+            {/* Status Filter */}
+            <Select
+              value={statusFilter}
+              onValueChange={(value) => setStatusFilter(value)}
+            >
+              <SelectTrigger className="w-[180px] rounded-full">
+                <SelectValue placeholder="Select Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Status</SelectLabel>
+                  <SelectItem value="All">All</SelectItem>
+                  <SelectItem value="Delivered">Delivered</SelectItem>
+                  <SelectItem value="Pending">Pending</SelectItem>
+                  <SelectItem value="Cancelled">Cancelled</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+            {/* Column Visibility Checkboxes */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="py-2 px-4 rounded-full bg-sky-700 text-white hover:bg-sky-800 transition">
+                Columns
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-gray-700 text-white">
+                <DropdownMenuLabel className="text-white">
+                  Table Data
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {Object.keys(visibleColumns).map((column) => (
+                  <DropdownMenuItem
+                    key={column}
+                    asChild
+                    className="hover:bg-gray-600"
+                  >
+                    <label className="flex items-center space-x-2 p-2 rounded-md dropdown-label hover:cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={visibleColumns[column]}
+                        onChange={() => toggleColumnVisibility(column)}
+                        className="custom-checkbox"
+                      />
+                      <span className="text-white capitalize">
+                        {column.replace(/([A-Z])/g, " $1")}
+                      </span>
+                    </label>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
           {/* Table */}
           <div className="overflow-auto rounded-lg">
             <table className="w-full text-left border-collapse overflow-hidden">
               <thead className="bg-sky-700 text-gray-200">
                 <tr>
-                  <th className="p-4">Customer Name</th>
-                  <th className="p-4">Items</th>
-                  <th className="p-4">Quantity</th>
-                  <th className="p-4">Price</th>
-                  <th className="p-4">Total Price</th>
-                  <th className="p-4">Order Date</th>
-                  <th className="p-4">Payment Method</th>
-                  <th className="p-4">Delivery Address</th>
-                  <th className="p-4">Remarks</th>
-                  <th className="p-4">Status</th>
-                  <th className="p-4">Actions</th>
+                  {visibleColumns.customerName && (
+                    <th className="p-4">Customer Name</th>
+                  )}
+                  {visibleColumns.items && <th className="p-4">Items</th>}
+                  {visibleColumns.quantity && <th className="p-4">Quantity</th>}
+                  {visibleColumns.price && <th className="p-4">Price</th>}
+                  {visibleColumns.totalPrice && (
+                    <th className="p-4">Total Price</th>
+                  )}
+                  {visibleColumns.orderDate && (
+                    <th className="p-4">Order Date</th>
+                  )}
+                  {visibleColumns.paymentMethod && (
+                    <th className="p-4">Payment Method</th>
+                  )}
+                  {visibleColumns.deliveryAddress && (
+                    <th className="p-4">Delivery Address</th>
+                  )}
+                  {visibleColumns.remarks && <th className="p-4">Remarks</th>}
+                  {visibleColumns.status && <th className="p-4">Status</th>}
+                  {visibleColumns.actions && <th className="p-4">Actions</th>}
                 </tr>
               </thead>
               <tbody className="bg-gray-800 text-gray-400 text-sm">
@@ -142,6 +220,7 @@ const Orders = () => {
                       isEditable={editableRow === order._id}
                       onEdit={() => handleEdit(order._id)}
                       onCancelEdit={handleCancelEdit}
+                      visibleColumns={visibleColumns}
                     />
                   ))
                 )}
