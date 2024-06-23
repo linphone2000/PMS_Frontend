@@ -25,8 +25,12 @@ const EmployeeRow = ({ employee, isEditable, onEdit, onCancelEdit }) => {
   const [employeeID, setEmployeeID] = useState(employee.employeeID);
   const [image, setImage] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   // Handlers
+  const handleImgError = () => {
+    setImgError(true);
+  };
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -82,17 +86,19 @@ const EmployeeRow = ({ employee, isEditable, onEdit, onCancelEdit }) => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          {employee.image && image == null ? (
+          {employee.image && image == null && !imgError ? (
             <img
               src={`${IMG_URL}/${employee.image}`}
               alt="Profile Picture"
               className="w-full h-full rounded-md object-cover border border-gray-400"
+              onError={handleImgError}
             />
           ) : image ? (
             <img
               className="w-full h-full rounded-md object-cover border border-gray-400"
               src={URL.createObjectURL(image)}
               alt="New Profile Picture"
+              onError={handleImgError}
             />
           ) : (
             <FaUserAlt className="text-gray-400 text-4xl" />

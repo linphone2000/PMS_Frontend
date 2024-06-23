@@ -4,8 +4,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-// States
+// React
 import { useState } from "react";
+import { FaPills } from "react-icons/fa";
 // Context
 import { useInventory } from "../../../context/InventoryContext";
 import { useSupplier } from "../../../context/SupplierContext";
@@ -30,6 +31,7 @@ const InventoryRow = ({ item, isEditable, onEdit, onCancelEdit }) => {
   const [category, setCategory] = useState(item.category);
   const [image, setImage] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   // Categories
   const categories = [
@@ -43,6 +45,9 @@ const InventoryRow = ({ item, isEditable, onEdit, onCancelEdit }) => {
   ];
 
   // Handlers
+  const handleImgError = () => {
+    setImgError(true);
+  };
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -99,24 +104,24 @@ const InventoryRow = ({ item, isEditable, onEdit, onCancelEdit }) => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          {item.image && image == null ? (
+          {item.image && image == null && !imgError ? (
             <img
               src={`${IMG_URL}/${item.image}`}
               alt="Item Image"
               className="w-full h-full object-cover"
+              onError={handleImgError}
             />
           ) : image ? (
             <img
               className="w-full h-full object-cover"
               src={URL.createObjectURL(image)}
               alt="New Item Image"
+              onError={handleImgError}
             />
           ) : (
-            <img
-              src="default_image.jpeg"
-              alt="Default Image"
-              className="w-16 h-16 object-cover rounded-md"
-            />
+            <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-md">
+              <FaPills className="text-gray-500 text-6xl" />
+            </div>
           )}
 
           {isEditable && isHovered && (
