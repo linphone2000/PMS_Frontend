@@ -46,11 +46,11 @@ const RegisterForm = ({ setMode }) => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
       transition={{ duration: 0.3 }}
-      className="shadow-lg flex justify-between w-7/12 rounded-lg overflow-hidden border text-sky-700 text-center mx-auto"
+      className="shadow-lg flex justify-between h-4/6 w-7/12 rounded-lg overflow-hidden border text-sky-700 text-center mx-auto"
     >
       {/* Image */}
       <div className="w-3/5">
-        <img className="rounded-s-lg h-full" src="pms_login.webp" alt="Register" />
+        <img className="rounded-s-lg h-full object-cover" src="pms_login.webp" alt="Register" />
       </div>
 
       {/* Form */}

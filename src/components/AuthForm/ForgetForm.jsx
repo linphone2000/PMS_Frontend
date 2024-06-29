@@ -71,12 +71,12 @@ const ForgetForm = ({ setMode }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -100 }}
       transition={{ duration: 0.3 }}
-      className="shadow-lg flex justify-between w-7/12 rounded-lg border text-sky-700 text-center mx-auto"
+      className="shadow-lg flex justify-between h-4/6 w-7/12 rounded-lg border text-sky-700 text-center mx-auto"
     >
       {/* Image */}
       <div className="w-3/5">
         <img
-          className="rounded-s-lg h-full"
+          className="rounded-s-lg h-full object-cover"
           src="pms_login.webp"
           alt="Reset Password"
         />
