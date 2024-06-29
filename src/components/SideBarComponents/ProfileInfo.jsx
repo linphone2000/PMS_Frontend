@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { formatRoleName } from "../../utils/formatter";
 import { useUIModal } from "../../context/UIModalContext";
 import { FaUserAlt } from "react-icons/fa";
+import { useState } from "react";
 
 const ProfileInfo = () => {
   // API
@@ -15,6 +16,14 @@ const ProfileInfo = () => {
 
   // Navigation
   const navigate = useNavigate();
+
+  // State
+  const [imgError, setImgError] = useState(false);
+
+  // Handlers
+  const handleImgError = () => {
+    setImgError(true);
+  };
 
   // Handle profile click
   const handleProfileClick = () => {
@@ -28,11 +37,12 @@ const ProfileInfo = () => {
         {/* Profile picture */}
         <div className="w-1/4 flex items-center justify-center">
           <div className="w-14 h-14 flex items-center justify-center">
-            {currentEmployee.image ? (
+            {currentEmployee.image && !imgError ? (
               <img
                 src={`${IMG_URL}/${currentEmployee.image}`}
                 alt="Profile Picture"
                 className="rounded-xl object-cover aspect-square border border-gray-400"
+                onError={handleImgError}
               />
             ) : (
               <FaUserAlt className="text-gray-400 text-4xl" />

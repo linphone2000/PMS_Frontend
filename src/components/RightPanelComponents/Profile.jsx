@@ -22,8 +22,13 @@ const Profile = () => {
   const [name, setName] = useState(currentEmployee.name);
   const [email, setEmail] = useState(currentEmployee.email);
   const [editMode, setEditMode] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   // Handlers
+  const handleImgError = () => {
+    setImgError(true);
+  };
+
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -74,17 +79,12 @@ const Profile = () => {
             onMouseLeave={handleMouseLeave}
           >
             {/* Display the existing image or a placeholder*/}
-            {currentEmployee.image && image == null ? (
+            {currentEmployee.image && !imgError ? (
               <img
                 src={`${IMG_URL}/${currentEmployee.image}`}
                 alt="Profile Picture"
                 className="w-full h-full object-cover rounded-3xl border border-gray-400"
-              />
-            ) : image ? (
-              <img
-                className="w-full h-full object-cover rounded-3xl border border-gray-400"
-                src={URL.createObjectURL(image)}
-                alt="New Profile"
+                onError={handleImgError}
               />
             ) : (
               <FaUserAlt className="text-gray-400 text-4xl" />
