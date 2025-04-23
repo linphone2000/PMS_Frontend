@@ -40,7 +40,7 @@ const DetailsDashboard = () => {
   const { allOrders } = useOrder();
 
   // States
-  const [filter, setFilter] = useState("daily");
+  const [filter, setFilter] = useState("all");
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [expandedOrder, setExpandedOrder] = useState(null);
 
