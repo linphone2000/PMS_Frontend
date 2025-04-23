@@ -49,6 +49,11 @@ const DetailsDashboard = () => {
   }, [filter, allOrders]);
 
   const filterOrders = () => {
+    if (filter === "all") {
+      setFilteredOrders(allOrders);
+      return;
+    }
+
     const now = new Date();
     let startDate;
 
@@ -156,18 +161,29 @@ const DetailsDashboard = () => {
     <div className="bg-gray-900 text-sky-100">
       {/* Heading */}
       <h2 className="text-2xl py-4 font-semibold text-sky-100">
-        Sales Report for (
+        Sales Report {filter === "all" ? "" : "for "}
         {filter === "daily"
           ? "Today"
           : filter === "monthly"
           ? "This Month"
-          : "This Year"}
-        )
+          : filter === "yearly"
+          ? "This Year"
+          : "All Time"}
       </h2>
 
       <div className="details-dashboard bg-gray-800 p-4 rounded-lg text-sky-100 mb-6">
         {/* Filters */}
         <div className="filters flex space-x-4 mb-4">
+          <button
+            onClick={() => setFilter("all")}
+            className={`px-4 py-2 rounded-md ${
+              filter === "all"
+                ? "bg-sky-500 text-white"
+                : "bg-sky-200 text-sky-700"
+            }`}
+          >
+            All
+          </button>
           <button
             onClick={() => setFilter("daily")}
             className={`px-4 py-2 rounded-md ${
